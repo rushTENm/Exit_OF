@@ -26,11 +26,13 @@ Content\HomeRScreen\go1.xnb
 Content\HomeRScreen\go2.xnb
 Content\HomeRScreen\go3.xnb
 Content\HomeRScreen\gogo.xnb
-Content\HomeRScreen\extinguisherNomal.xnb
-Content\HomeRScreen\extinguisherUse.xnb
-Content\HomeRScreen\homeSmall.xnb
-Content\HomeRScreen\JustBall.xnb
 Content\ResultRScreen\anotherPlaceHover.xnb
 Content\ResultRScreen\anotherPlaceNomal.xnb
 Content\ResultRScreen\resultBadBackground.xnb
 Content\ResultRScreen\resultGoodBackground.xnb
+Content\HomeRScreen\extinguisherNomal.xnb
+Content\HomeRScreen\extinguisherUse.xnb
+Content\HomeRScreen\homeSmall.xnb
+Content\HomeRScreen\JustBall.xnb
+Content\fire.xnb
+Content\smoke.xnb

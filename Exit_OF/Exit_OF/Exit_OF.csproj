@@ -79,8 +79,14 @@
     <Compile Include="Button.cs" />
     <Compile Include="ChaseCamera.cs" />
     <Compile Include="ChaseTarget.cs" />
+    <Compile Include="Emitter.cs" />
     <Compile Include="GameModel.cs" />
-    <Compile Include="ResultRScreen.cs" />
+    <Compile Include="Particle.cs" />
+    <Compile Include="ParticleComponent.cs" />
+    <Compile Include="ParticleFader.cs" />
+    <Compile Include="ParticleScaler.cs" />
+    <Compile Include="RandomMinMax.cs" />
+    <Compile Include="Screens\ResultRScreen.cs" />
     <Compile Include="Screens\HomeRScreen.cs" />
     <Compile Include="Screens\IScreen.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -129,6 +135,9 @@
       <ProductName>Microsoft XNA Framework Redistributable 4.0</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />

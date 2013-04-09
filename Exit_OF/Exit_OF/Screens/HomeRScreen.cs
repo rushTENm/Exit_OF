@@ -19,9 +19,6 @@ namespace Exit_OF
         Texture2D m_Go2;
         Texture2D m_Go3;
 
-        bool m_IsStarted = false;
-        int m_GoCounter = 0;
-
         Vector2 m_GoPosition = new Vector2(433, 234);
 
         Texture2D dialer;
@@ -31,11 +28,15 @@ namespace Exit_OF
         Texture2D dialerCall;
         Texture2D dialerEnd;
 
-        bool Isdialer = true;
-        int dialerCounter = 0;
-
         KeyboardState lastKeyboardState = new KeyboardState();
         KeyboardState currentKeyboardState = new KeyboardState();
+
+        Vector3 cameraPosition = new Vector3(0, 50, 50);
+        Vector3 cameraFront = new Vector3(0, 0, -1);
+
+        BasicEffect basicEffect;
+
+        ParticleComponent particleComponent;
 
         ChaseTarget target;
         ChaseCamera camera;
@@ -46,12 +47,23 @@ namespace Exit_OF
         GameModel fire;
         GameModel phone;
 
+        bool m_IsStarted = false;
+        int m_GoCounter = 0;
+
+        bool Isdialer = true;
+        int dialerCounter = 0;
+
         bool IsExtinguisherGet = false;
 
         bool IsFireNear = false;
         int fireCounter = 0;
 
         bool cameraSpringEnabled = true;
+
+        public HomeRScreen(Exit_OF game, GraphicsDevice device, ContentManager content)
+        {
+            ParticleInit(game, device, content);
+        }
 
         private void Reset()
         {
@@ -102,7 +114,21 @@ namespace Exit_OF
             UpdateCameraChaseTarget();
             camera.Reset();
         }
-        
+
+        public void ParticleInit(Exit_OF exit_OF, GraphicsDevice graphicsDevice, ContentManager content)
+        {
+
+            particleComponent = new ParticleComponent(exit_OF);
+
+            basicEffect = new BasicEffect(graphicsDevice)
+            {
+                TextureEnabled = true,
+                VertexColorEnabled = true,
+            };
+
+            particleComponent.LoadContent(content);
+        }
+
         public override void Update(GameTime gameTime)
         {
             mouseState = Mouse.GetState();
@@ -121,6 +147,8 @@ namespace Exit_OF
             CheckDialer();
 
             PositionUpdate(gameTime);
+
+            particleComponent.Update(gameTime);
         }
 
         private void CheckExtingGet()
@@ -210,7 +238,7 @@ namespace Exit_OF
         {
             target.DrawMeshes(camera);
 
-            smallHome.DrawMeshes(camera);
+            //smallHome.DrawMeshes(camera);
 
             phone.DrawMeshes(camera);
 
@@ -235,6 +263,9 @@ namespace Exit_OF
             DrawDialer(spriteBatch);
 
             spriteBatch.End();
+
+            particleComponent.Draw(spriteBatch, basicEffect, camera.projection, camera.view);
+
         }
 
         private void DrawGo(SpriteBatch spriteBatch)

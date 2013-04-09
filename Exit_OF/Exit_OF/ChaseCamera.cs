@@ -133,13 +133,13 @@ namespace Exit_OF
         {
             get { return view; }
         }
-        private Matrix view;
+        public Matrix view;
 
         public Matrix Projection
         {
             get { return projection; }
         }
-        private Matrix projection;
+        public Matrix projection;
 
         /// <summary>
         /// Rebuilds object space values in world space. Invoke before publicly
