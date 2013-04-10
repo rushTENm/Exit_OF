@@ -79,13 +79,13 @@
     <Compile Include="Button.cs" />
     <Compile Include="ChaseCamera.cs" />
     <Compile Include="ChaseTarget.cs" />
-    <Compile Include="Emitter.cs" />
+    <Compile Include="Particle\Emitter.cs" />
     <Compile Include="GameModel.cs" />
-    <Compile Include="Particle.cs" />
-    <Compile Include="ParticleComponent.cs" />
-    <Compile Include="ParticleFader.cs" />
-    <Compile Include="ParticleScaler.cs" />
-    <Compile Include="RandomMinMax.cs" />
+    <Compile Include="Particle\Particle.cs" />
+    <Compile Include="Particle\ParticleComponent.cs" />
+    <Compile Include="Particle\ParticleFader.cs" />
+    <Compile Include="Particle\ParticleScaler.cs" />
+    <Compile Include="Particle\RandomMinMax.cs" />
     <Compile Include="Screens\ResultRScreen.cs" />
     <Compile Include="Screens\HomeRScreen.cs" />
     <Compile Include="Screens\IScreen.cs" />
@@ -96,6 +96,7 @@
     <Compile Include="Screens\SettingsScreen.cs" />
     <Compile Include="Screens\TitleScreen.cs" />
     <Compile Include="Screens\StageRScreen.cs" />
+    <Compile Include="Particle\SpriteAnimation.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

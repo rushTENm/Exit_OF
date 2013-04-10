@@ -37,6 +37,7 @@ namespace Exit_OF
         BasicEffect basicEffect;
 
         ParticleComponent particleComponent;
+        SpriteAnimation fire;
 
         ChaseTarget target;
         ChaseCamera camera;
@@ -44,7 +45,7 @@ namespace Exit_OF
         GameModel smallHome;
         GameModel extinguisher;
         GameModel extinguisherUse;
-        GameModel fire;
+        GameModel fireBall;
         GameModel phone;
 
         bool m_IsStarted = false;
@@ -103,8 +104,8 @@ namespace Exit_OF
             extinguisherUse = new GameModel();
             extinguisherUse.Init(content, 0.5f, target.Position, @"HomeRScreen\extinguisherUse");
 
-            fire = new GameModel();
-            fire.Init(content, 1f, new Vector3(-1050, 150, 1100), @"HomeRScreen\JustBall");
+            fireBall = new GameModel();
+            fireBall.Init(content, 1f, new Vector3(-1050, 150, 1100), @"HomeRScreen\JustBall");
 
             phone = new GameModel();
             phone.Init(content, 0.5f, new Vector3(-800, 300, -100), @"HomeRScreen\JustBall");
@@ -127,6 +128,9 @@ namespace Exit_OF
             };
 
             particleComponent.LoadContent(content);
+
+            fire = new SpriteAnimation();
+            fire.Init(content,"fire",Vector2.Zero,4,4,14,2, 2f);
         }
 
         public override void Update(GameTime gameTime)
@@ -149,6 +153,8 @@ namespace Exit_OF
             PositionUpdate(gameTime);
 
             particleComponent.Update(gameTime);
+
+            fire.Update();
         }
 
         private void CheckExtingGet()
@@ -161,7 +167,7 @@ namespace Exit_OF
 
         private void CheckFireNear()
         {
-            if (fire.boundingS.Contains(target.boundingS) == ContainmentType.Intersects && IsExtinguisherGet)
+            if (fireBall.boundingS.Contains(target.boundingS) == ContainmentType.Intersects && IsExtinguisherGet)
             {
                 IsFireNear = true;
                 fireCounter++;
@@ -238,7 +244,7 @@ namespace Exit_OF
         {
             target.DrawMeshes(camera);
 
-            //smallHome.DrawMeshes(camera);
+            smallHome.DrawMeshes(camera);
 
             phone.DrawMeshes(camera);
 
@@ -249,7 +255,7 @@ namespace Exit_OF
 
             if (fireCounter < 90)
             {
-                fire.DrawMeshes(camera);
+                // fireBall.DrawMeshes(camera);
             }
 
             if (IsFireNear)
@@ -257,15 +263,26 @@ namespace Exit_OF
                 extinguisherUse.DrawMeshes(camera);
             }
 
+            particleComponent.Draw(spriteBatch, basicEffect, camera.projection, camera.view);
+
+            Vector3 textPosition = new Vector3(-1350, 350, 1100);
+
+            basicEffect.World = Matrix.CreateConstrainedBillboard(textPosition, textPosition - cameraFront, Vector3.Down, null, null);
+            basicEffect.View = camera.view;
+            basicEffect.Projection = camera.projection;
+
+            spriteBatch.Begin(0, null, null, DepthStencilState.DepthRead, RasterizerState.CullNone, basicEffect);
+
+            spriteBatch.Draw(fire.Texture, Vector2.Zero, new Rectangle(fire.columnPositon * fire.m_Width, fire.rowPositon * fire.m_Height, fire.m_Width, fire.m_Height), Color.White, 0f, Vector2.Zero, fire.m_Scale, 0, 0);
+
+            spriteBatch.End();
+
             spriteBatch.Begin();
 
             DrawGo(spriteBatch);
             DrawDialer(spriteBatch);
 
             spriteBatch.End();
-
-            particleComponent.Draw(spriteBatch, basicEffect, camera.projection, camera.view);
-
         }
 
         private void DrawGo(SpriteBatch spriteBatch)

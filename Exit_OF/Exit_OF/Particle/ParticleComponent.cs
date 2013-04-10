@@ -18,7 +18,7 @@ namespace Exit_OF
 
         Matrix invertY = Matrix.CreateScale(1, -1, 1);
 
-        Vector3 particlePosition = new Vector3(-20, 60, -10);
+        Vector3 particlePosition = new Vector3(-1150, 120, 1100);
         Vector3 viewSpacePosition;
 
         public ParticleComponent(Exit_OF game)
@@ -31,25 +31,10 @@ namespace Exit_OF
         /// Allows the game component to perform any initialization it needs to before starting
         /// to run.  This is where it can query for any required services and load content.
         /// </summary>
-        public void Initialize()
-        {
-        }
+        public void Initialize() { }
 
         public void LoadContent(ContentManager content)
         {
-            Emitter fireEmitter = new Emitter();
-            fireEmitter.Active = true;
-            fireEmitter.TextureList.Add(content.Load<Texture2D>("fire"));
-            fireEmitter.RandomEmissionInterval = new RandomMinMax(330);
-            fireEmitter.ParticleLifeTime = 1350;
-            fireEmitter.ParticleDirection = new RandomMinMax(0);
-            fireEmitter.ParticleSpeed = new RandomMinMax(1f);
-            fireEmitter.ParticleRotation = new RandomMinMax(0);
-            fireEmitter.RotationSpeed = new RandomMinMax(0);
-            fireEmitter.ParticleFader = new ParticleFader(true, true, 0);
-            fireEmitter.ParticleScaler = new ParticleScaler(0.2f, 0.3f, 0, 1000);
-            fireEmitter.Position = new Vector2(0, 370);
-
             Emitter smokeEmitter = new Emitter();
             smokeEmitter.Active = true;
             smokeEmitter.TextureList.Add(content.Load<Texture2D>("smoke"));
@@ -58,13 +43,12 @@ namespace Exit_OF
             smokeEmitter.ParticleDirection = new RandomMinMax(-15, 15);
             smokeEmitter.ParticleSpeed = new RandomMinMax(4.5f);
             smokeEmitter.ParticleRotation = new RandomMinMax(0);
-            smokeEmitter.RotationSpeed = new RandomMinMax(-0.008f, 0.008f);
+            smokeEmitter.RotationSpeed = new RandomMinMax(-0.017f, 0.017f);
             smokeEmitter.ParticleFader = new ParticleFader(true, true);
-            smokeEmitter.ParticleScaler = new ParticleScaler(0.25f, 0.5f, 50, smokeEmitter.ParticleLifeTime);
+            smokeEmitter.ParticleScaler = new ParticleScaler(1f, 2f, 50, smokeEmitter.ParticleLifeTime);
             smokeEmitter.Position = new Vector2(0, 0);
 
             particleEmitterList.Add(smokeEmitter);
-            particleEmitterList.Add(fireEmitter);
         }
 
         /// <summary>
