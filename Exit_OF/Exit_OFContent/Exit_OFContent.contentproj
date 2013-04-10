@@ -47,26 +47,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="TitleScreen\rescueHover.png">
-      <Name>rescueHover</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="TitleScreen\rescueNomal.png">
-      <Name>rescueNomal</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="TitleScreen\settingHover.png">
-      <Name>settingHover</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="TitleScreen\settingNomal.png">
-      <Name>settingNomal</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="TitleScreen\titleBackground.png">
       <Name>titleBackground</Name>
       <Importer>TextureImporter</Importer>
@@ -91,37 +71,37 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="StageRScreen\backHover.png">
+    <Compile Include="StageEScreen\backHover.png">
       <Name>backHover</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="StageRScreen\backNomal.png">
+    <Compile Include="StageEScreen\backNomal.png">
       <Name>backNomal</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="StageRScreen\homeHover.png">
+    <Compile Include="StageEScreen\homeHover.png">
       <Name>homeHover</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="StageRScreen\homeNomal.png">
+    <Compile Include="StageEScreen\homeNomal.png">
       <Name>homeNomal</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="StageRScreen\place.png">
+    <Compile Include="StageEScreen\place.png">
       <Name>place</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="StageRScreen\stageBackground.png">
+    <Compile Include="StageEScreen\stageBackground.png">
       <Name>stageBackground</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="StageRScreen\where.png">
+    <Compile Include="StageEScreen\where.png">
       <Name>where</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
@@ -202,22 +182,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ResultRScreen\anotherPlaceHover.png">
-      <Name>anotherPlaceHover</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="ResultRScreen\anotherPlaceNomal.png">
-      <Name>anotherPlaceNomal</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="ResultRScreen\resultBadBackground.png">
+    <Compile Include="ResultEScreen\resultBadBackground.png">
       <Name>resultBadBackground</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="ResultRScreen\resultGoodBackground.png">
+    <Compile Include="ResultEScreen\resultGoodBackground.png">
       <Name>resultGoodBackground</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
@@ -231,6 +201,74 @@
     </Compile>
     <Compile Include="smoke.bmp">
       <Name>smoke</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="TitleScreen\settingsHover.png">
+      <Name>settingsHover</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="TitleScreen\settingsNomal.png">
+      <Name>settingsNomal</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="TitleScreen\exitHover.png">
+      <Name>exitHover</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="TitleScreen\exitNomal.png">
+      <Name>exitNomal</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="SettingsScreen\check.png">
+      <Name>check</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="SettingsScreen\selectEdge.png">
+      <Name>selectEdge</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ResultEScreen\restartHover.png">
+      <Name>restartHover</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="ResultEScreen\restartNomal.png">
+      <Name>restartNomal</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="ResultEScreen\stageHover.png">
+      <Name>stageHover</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="ResultEScreen\stageNomal.png">
+      <Name>stageNomal</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="ResultEScreen\titleHover.png">
+      <Name>titleHover</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="ResultEScreen\titleNomal.png">
+      <Name>titleNomal</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

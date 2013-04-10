@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Exit_OF
 {
-    class StageRScreen : IScreen
+    class StageEScreen : IScreen
     {
         Texture2D m_BackgroundImage;
 
@@ -23,19 +24,19 @@ namespace Exit_OF
 
         public override void Init(ContentManager content)
         {
-            m_BackgroundImage = content.Load<Texture2D>(@"StageRScreen\stageBackground");
+            m_BackgroundImage = content.Load<Texture2D>(@"StageEScreen\stageBackground");
 
             m_BackButton = new Button();
-            m_BackButton.Init(content, new Vector2(6, 6), @"StageRScreen\backNomal", @"StageRScreen\backHover");
+            m_BackButton.Init(content, new Vector2(6, 6), @"StageEScreen\backNomal", @"StageEScreen\backHover");
             m_BackButton.UserEvent = OnHoverBackButton;
 
             m_HomeButton = new Button();
-            m_HomeButton.Init(content, new Vector2(7, 202), @"StageRScreen\homeNomal", @"StageRScreen\homeHover");
+            m_HomeButton.Init(content, new Vector2(7, 202), @"StageEScreen\homeNomal", @"StageEScreen\homeHover");
             m_HomeButton.UserEvent = OnHoverHomeButton;
 
-            m_Where = content.Load<Texture2D>(@"StageRScreen\where");
+            m_Where = content.Load<Texture2D>(@"StageEScreen\where");
 
-            place = content.Load<Texture2D>(@"StageRScreen\place");
+            place = content.Load<Texture2D>(@"StageEScreen\place");
         }
 
         private void OnHoverBackButton()

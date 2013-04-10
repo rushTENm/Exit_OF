@@ -12,6 +12,8 @@ namespace Exit_OF
     class SettingsScreen : IScreen
     {
         Texture2D m_BackgroundImage;
+        Texture2D check;
+        Texture2D selectEdge;
 
         MouseState mouseState;
 
@@ -20,6 +22,8 @@ namespace Exit_OF
         public override void Init(ContentManager content)
         {
             m_BackgroundImage = content.Load<Texture2D>(@"SettingsScreen\SettingBackground");
+            check = content.Load<Texture2D>(@"SettingsScreen\check");
+            selectEdge = content.Load<Texture2D>(@"settingsScreen\selectEdge");
 
             m_BackButton = new Button();
             m_BackButton.Init(content, new Vector2(6, 6), @"SettingsScreen\backNomal", @"SettingsScreen\backHover");

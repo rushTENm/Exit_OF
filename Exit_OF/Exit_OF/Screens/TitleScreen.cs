@@ -15,7 +15,7 @@ namespace Exit_OF
         Texture2D m_BackgroundImage;
 
         Button m_DrillButton;
-        Button m_RescueButton;
+        Button m_ExitButton;
         Button m_SettingButton;
 
         MouseState mouseState;
@@ -25,15 +25,15 @@ namespace Exit_OF
             m_BackgroundImage = content.Load<Texture2D>(@"TitleScreen\titleBackground");
 
             m_DrillButton = new Button();
-            m_DrillButton.Init(content, new Vector2(270, 300), @"TitleScreen\drillNomal", @"TitleScreen\drillHover");
+            m_DrillButton.Init(content, new Vector2(350, 335), @"TitleScreen\drillNomal", @"TitleScreen\drillHover");
             m_DrillButton.UserEvent = OnHoverDrillButton;
 
-            m_RescueButton = new Button();
-            m_RescueButton.Init(content, new Vector2(270, 465), @"TitleScreen\rescueNomal", @"TitleScreen\rescueHover");
-            m_RescueButton.UserEvent = OnHoverRescueButton;
+            m_ExitButton = new Button();
+            m_ExitButton.Init(content, new Vector2(350, 510), @"TitleScreen\exitNomal", @"TitleScreen\exitHover");
+            m_ExitButton.UserEvent = OnHoverRescueButton;
 
             m_SettingButton = new Button();
-            m_SettingButton.Init(content, new Vector2(20, 598), @"TitleScreen\settingNomal", @"TitleScreen\settingHover");
+            m_SettingButton.Init(content, new Vector2(20, 598), @"TitleScreen\settingsNomal", @"TitleScreen\settingsHover");
             m_SettingButton.UserEvent = OnHoverSettingButton;
         }
 
@@ -43,7 +43,7 @@ namespace Exit_OF
 
         private void OnHoverRescueButton()
         {
-            m_ScreenManager.SelectScreen(Mode.StageRScreen);
+            m_ScreenManager.SelectScreen(Mode.StageEScreen);
         }
 
         private void OnHoverSettingButton()
@@ -56,7 +56,7 @@ namespace Exit_OF
             mouseState = Mouse.GetState();
 
             m_DrillButton.Update(mouseState);
-            m_RescueButton.Update(mouseState);
+            m_ExitButton.Update(mouseState);
             m_SettingButton.Update(mouseState);
         }
 
@@ -67,7 +67,7 @@ namespace Exit_OF
             spriteBatch.Draw(m_BackgroundImage, Vector2.Zero, Color.White);
 
             m_DrillButton.Draw(spriteBatch);
-            m_RescueButton.Draw(spriteBatch);
+            m_ExitButton.Draw(spriteBatch);
             m_SettingButton.Draw(spriteBatch);
 
             spriteBatch.End();

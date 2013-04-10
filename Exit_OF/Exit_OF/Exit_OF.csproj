@@ -86,7 +86,7 @@
     <Compile Include="Particle\ParticleFader.cs" />
     <Compile Include="Particle\ParticleScaler.cs" />
     <Compile Include="Particle\RandomMinMax.cs" />
-    <Compile Include="Screens\ResultRScreen.cs" />
+    <Compile Include="Screens\ResultEScreen.cs" />
     <Compile Include="Screens\HomeRScreen.cs" />
     <Compile Include="Screens\IScreen.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -95,8 +95,8 @@
     <Compile Include="ScreenManager.cs" />
     <Compile Include="Screens\SettingsScreen.cs" />
     <Compile Include="Screens\TitleScreen.cs" />
-    <Compile Include="Screens\StageRScreen.cs" />
     <Compile Include="Particle\SpriteAnimation.cs" />
+    <Compile Include="Screens\StageEScreen.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

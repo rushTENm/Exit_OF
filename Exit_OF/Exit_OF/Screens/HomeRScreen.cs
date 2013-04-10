@@ -139,7 +139,7 @@ namespace Exit_OF
 
             if (mouseState.RightButton == ButtonState.Pressed)
             {
-                m_ScreenManager.SelectScreen(Mode.StageRScreen);
+                m_ScreenManager.SelectScreen(Mode.StageEScreen);
             }
 
             CheckExtingGet();
@@ -184,7 +184,7 @@ namespace Exit_OF
             if (fireCounter > 120)
             {
                 Reset();
-                m_ScreenManager.SelectScreen(Mode.ResultRScreen);
+                m_ScreenManager.SelectScreen(Mode.ResultEScreen);
             }
         }
 

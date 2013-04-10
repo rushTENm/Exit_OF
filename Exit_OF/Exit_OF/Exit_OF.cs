@@ -46,8 +46,8 @@ namespace Exit_OF
             // TODO: use this.Content to load your game content here
             m_ScreenManager.AddScreen(Mode.TitleScreen, new TitleScreen(), Content);
             m_ScreenManager.AddScreen(Mode.SettingsScreen, new SettingsScreen(), Content);
-            m_ScreenManager.AddScreen(Mode.StageRScreen, new StageRScreen(), Content);
-            m_ScreenManager.AddScreen(Mode.ResultRScreen, new ResultRScreen(), Content);
+            m_ScreenManager.AddScreen(Mode.StageEScreen, new StageEScreen(), Content);
+            m_ScreenManager.AddScreen(Mode.ResultEScreen, new ResultEScreen(), Content);
             m_ScreenManager.AddScreen(Mode.HomeRScreen, new HomeRScreen(this, GraphicsDevice, Content), Content);
 
             m_ScreenManager.SelectScreen(Mode.TitleScreen);
