@@ -42,3 +42,13 @@ Content\ResultEScreen\stageHover.xnb
 Content\ResultEScreen\stageNomal.xnb
 Content\ResultEScreen\titleHover.xnb
 Content\ResultEScreen\titleNomal.xnb
+Content\PauseScreen\backHover.xnb
+Content\PauseScreen\backNomal.xnb
+Content\PauseScreen\continueHover.xnb
+Content\PauseScreen\continueNomal.xnb
+Content\PauseScreen\pauseBackground.xnb
+Content\PauseScreen\restartHover.xnb
+Content\PauseScreen\restartNomal.xnb
+Content\HomeRScreen\inventory.xnb
+Content\HomeRScreen\barGreen.xnb
+Content\HomeRScreen\barRed.xnb

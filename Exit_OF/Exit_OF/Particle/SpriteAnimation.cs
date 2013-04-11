@@ -11,24 +11,24 @@ namespace Exit_OF
 {
     class SpriteAnimation
     {
-        public Texture2D Texture;
+        Texture2D Texture;
 
         Vector2 m_Position;
 
         int m_FrameCounter = 0;
         int m_WaitCounter = 0;
 
-        public int m_Width;
-        public int m_Height;
+        int m_Width;
+        int m_Height;
 
-        public int rowPositon;
-        public int columnPositon;
+        int rowPositon;
+        int columnPositon;
         int m_Column;
 
         int m_LastFrame;
         int m_Wait;
 
-        public float m_Scale;
+        float m_Scale;
 
         public void Init(ContentManager content, string address, Vector2 position, int row, int column, int lastFrame, int wait, float scale)
         {
@@ -64,11 +64,17 @@ namespace Exit_OF
             columnPositon = m_FrameCounter % m_Column;
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, BasicEffect basicEffect, ChaseCamera camera, Vector3 cameraFront)
         {
-            spriteBatch.Begin();
+            Vector3 textPosition = new Vector3(-1350, 350, 1100);
 
-            spriteBatch.Draw(Texture, m_Position, new Rectangle(columnPositon * m_Width, rowPositon * m_Height, m_Width, m_Height), Color.White, 0.0f, Vector2.Zero, m_Scale, SpriteEffects.None, 0);
+            basicEffect.World = Matrix.CreateConstrainedBillboard(textPosition, textPosition - cameraFront, Vector3.Down, null, null);
+            basicEffect.View = camera.view;
+            basicEffect.Projection = camera.projection;
+
+            spriteBatch.Begin(0, null, null, DepthStencilState.DepthRead, RasterizerState.CullNone, basicEffect);
+
+            spriteBatch.Draw(Texture, Vector2.Zero, new Rectangle(columnPositon * m_Width, rowPositon * m_Height, m_Width, m_Height), Color.White, 0f, Vector2.Zero, m_Scale, 0, 0);
 
             spriteBatch.End();
         }

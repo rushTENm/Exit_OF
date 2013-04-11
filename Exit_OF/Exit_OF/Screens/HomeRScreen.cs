@@ -14,22 +14,11 @@ namespace Exit_OF
     {
         MouseState mouseState;
 
-        Texture2D m_Gogo;
-        Texture2D m_Go1;
-        Texture2D m_Go2;
-        Texture2D m_Go3;
-
-        Vector2 m_GoPosition = new Vector2(433, 234);
-
-        Texture2D dialer;
-        Texture2D dialer9;
-        Texture2D dialer91;
-        Texture2D dialer911;
-        Texture2D dialerCall;
-        Texture2D dialerEnd;
-
         KeyboardState lastKeyboardState = new KeyboardState();
         KeyboardState currentKeyboardState = new KeyboardState();
+
+        DrawHelper drawHelper = new DrawHelper();
+        Texture2D pause;
 
         Vector3 cameraPosition = new Vector3(0, 50, 50);
         Vector3 cameraFront = new Vector3(0, 0, -1);
@@ -48,12 +37,6 @@ namespace Exit_OF
         GameModel fireBall;
         GameModel phone;
 
-        bool m_IsStarted = false;
-        int m_GoCounter = 0;
-
-        bool Isdialer = true;
-        int dialerCounter = 0;
-
         bool IsExtinguisherGet = false;
 
         bool IsFireNear = false;
@@ -69,27 +52,19 @@ namespace Exit_OF
         private void Reset()
         {
             target.Position = Vector3.Zero;
-            m_IsStarted = false;
+            drawHelper.m_IsStarted = false;
             IsExtinguisherGet = false;
             IsFireNear = false;
-            m_GoCounter = 0;
-            dialerCounter = 0;
+            drawHelper.m_GoCounter = 0;
+            drawHelper.dialerCounter = 0;
             fireCounter = 0;
         }
 
         public override void Init(ContentManager content)
         {
-            m_Gogo = content.Load<Texture2D>(@"HomeRScreen\gogo");
-            m_Go1 = content.Load<Texture2D>(@"HomeRScreen\go1");
-            m_Go2 = content.Load<Texture2D>(@"HomeRScreen\go2");
-            m_Go3 = content.Load<Texture2D>(@"HomeRScreen\go3");
+            drawHelper.Init(content);
 
-            dialer = content.Load<Texture2D>(@"HomeRScreen\dialer");
-            dialer9 = content.Load<Texture2D>(@"HomeRScreen\dialer9");
-            dialer91 = content.Load<Texture2D>(@"HomeRScreen\dialer91");
-            dialer911 = content.Load<Texture2D>(@"HomeRScreen\dialer911");
-            dialerCall = content.Load<Texture2D>(@"HomeRScreen\dialerCall");
-            dialerEnd = content.Load<Texture2D>(@"HomeRScreen\dialerEnd");
+            pause = content.Load<Texture2D>(@"PauseScreen\pauseBackground");
 
             target = new ChaseTarget();
             target.Init(content, 0.02f, @"HomeRScreen\JustBall");
@@ -130,7 +105,7 @@ namespace Exit_OF
             particleComponent.LoadContent(content);
 
             fire = new SpriteAnimation();
-            fire.Init(content,"fire",Vector2.Zero,4,4,14,2, 2f);
+            fire.Init(content, "fire", Vector2.Zero, 4, 4, 14, 3, 2f);
         }
 
         public override void Update(GameTime gameTime)
@@ -139,7 +114,7 @@ namespace Exit_OF
 
             if (mouseState.RightButton == ButtonState.Pressed)
             {
-                m_ScreenManager.SelectScreen(Mode.StageEScreen);
+                // m_ScreenManager.SelectScreen(Mode.PauseScreen);
             }
 
             CheckExtingGet();
@@ -159,7 +134,7 @@ namespace Exit_OF
 
         private void CheckExtingGet()
         {
-            if (extinguisher.boundingS.Intersects(target.boundingS) && Isdialer)
+            if (extinguisher.boundingS.Intersects(target.boundingS) && drawHelper.Isdialer)
             {
                 IsExtinguisherGet = true;
             }
@@ -192,13 +167,13 @@ namespace Exit_OF
         {
             if (phone.boundingS.Intersects(target.boundingS))
             {
-                Isdialer = false;
+                drawHelper.Isdialer = false;
             }
         }
 
         private void PositionUpdate(GameTime gameTime)
         {
-            if (m_IsStarted)
+            if (drawHelper.m_IsStarted)
             {
                 // TODO: Add your update logic here
                 lastKeyboardState = currentKeyboardState;
@@ -253,11 +228,6 @@ namespace Exit_OF
                 extinguisher.DrawMeshes(camera);
             }
 
-            if (fireCounter < 90)
-            {
-                // fireBall.DrawMeshes(camera);
-            }
-
             if (IsFireNear)
             {
                 extinguisherUse.DrawMeshes(camera);
@@ -265,89 +235,18 @@ namespace Exit_OF
 
             particleComponent.Draw(spriteBatch, basicEffect, camera.projection, camera.view);
 
-            Vector3 textPosition = new Vector3(-1350, 350, 1100);
-
-            basicEffect.World = Matrix.CreateConstrainedBillboard(textPosition, textPosition - cameraFront, Vector3.Down, null, null);
-            basicEffect.View = camera.view;
-            basicEffect.Projection = camera.projection;
-
-            spriteBatch.Begin(0, null, null, DepthStencilState.DepthRead, RasterizerState.CullNone, basicEffect);
-
-            spriteBatch.Draw(fire.Texture, Vector2.Zero, new Rectangle(fire.columnPositon * fire.m_Width, fire.rowPositon * fire.m_Height, fire.m_Width, fire.m_Height), Color.White, 0f, Vector2.Zero, fire.m_Scale, 0, 0);
-
-            spriteBatch.End();
-
-            spriteBatch.Begin();
-
-            DrawGo(spriteBatch);
-            DrawDialer(spriteBatch);
-
-            spriteBatch.End();
-        }
-
-        private void DrawGo(SpriteBatch spriteBatch)
-        {
-            if (m_IsStarted == false)
+            if (fireCounter < 90)
             {
-                if (m_GoCounter > 240)
-                {
-                    m_IsStarted = true;
-                }
-                else if (m_GoCounter > 180)
-                {
-                    spriteBatch.Draw(m_Gogo, m_GoPosition, Color.White);
-                }
-                else if (m_GoCounter > 120)
-                {
-                    spriteBatch.Draw(m_Go1, m_GoPosition, Color.White);
-                }
-                else if (m_GoCounter > 60)
-                {
-                    spriteBatch.Draw(m_Go2, m_GoPosition, Color.White);
-                }
-                else
-                {
-                    spriteBatch.Draw(m_Go3, m_GoPosition, Color.White);
-                }
-
-                m_GoCounter++;
+                fire.Draw(spriteBatch, basicEffect, camera, cameraFront);
             }
-        }
 
-        private void DrawDialer(SpriteBatch spriteBatch)
-        {
-            if (Isdialer == false)
+            drawHelper.Draw(spriteBatch);
+
+            if (mouseState.RightButton == ButtonState.Pressed)
             {
-                if (dialerCounter > 360)
-                {
-                    Isdialer = true;
-                }
-                else if (dialerCounter > 300)
-                {
-                    spriteBatch.Draw(dialerEnd, new Vector2(0, 0), null, Color.White, 0f, Vector2.Zero, 768 / 1280f, SpriteEffects.None, 0);
-                }
-                else if (dialerCounter > 240)
-                {
-                    spriteBatch.Draw(dialerCall, new Vector2(0, 0), null, Color.White, 0f, Vector2.Zero, 768 / 1280f, SpriteEffects.None, 0);
-                }
-                else if (dialerCounter > 180)
-                {
-                    spriteBatch.Draw(dialer911, new Vector2(0, 0), null, Color.White, 0f, Vector2.Zero, 768 / 1280f, SpriteEffects.None, 0);
-
-                }
-                else if (dialerCounter > 120)
-                {
-                    spriteBatch.Draw(dialer91, new Vector2(0, 0), null, Color.White, 0f, Vector2.Zero, 768 / 1280f, SpriteEffects.None, 0);
-                }
-                else if (dialerCounter > 60)
-                {
-                    spriteBatch.Draw(dialer9, new Vector2(0, 0), null, Color.White, 0f, Vector2.Zero, 768 / 1280f, SpriteEffects.None, 0);
-                }
-                else
-                {
-                    spriteBatch.Draw(dialer, new Vector2(0, 0), null, Color.White, 0f, Vector2.Zero, 768 / 1280f, SpriteEffects.None, 0);
-                }
-                dialerCounter++;
+                spriteBatch.Begin();
+                spriteBatch.Draw(pause, Vector2.Zero, Color.White);
+                spriteBatch.End();
             }
         }
     }

@@ -79,6 +79,7 @@
     <Compile Include="Button.cs" />
     <Compile Include="ChaseCamera.cs" />
     <Compile Include="ChaseTarget.cs" />
+    <Compile Include="DrawHelper.cs" />
     <Compile Include="Particle\Emitter.cs" />
     <Compile Include="GameModel.cs" />
     <Compile Include="Particle\Particle.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="Particle\ParticleFader.cs" />
     <Compile Include="Particle\ParticleScaler.cs" />
     <Compile Include="Particle\RandomMinMax.cs" />
+    <Compile Include="Screens\PauseScreen.cs" />
     <Compile Include="Screens\ResultEScreen.cs" />
     <Compile Include="Screens\HomeRScreen.cs" />
     <Compile Include="Screens\IScreen.cs" />
