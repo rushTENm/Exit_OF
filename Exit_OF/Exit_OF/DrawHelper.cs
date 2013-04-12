@@ -105,28 +105,28 @@ namespace Exit_OF
                 }
                 else if (dialerCounter > 300)
                 {
-                    spriteBatch.Draw(dialerEnd, new Vector2(0, 0), null, Color.White, 0f, Vector2.Zero, 768 / 1280f, SpriteEffects.None, 0);
+                    spriteBatch.Draw(dialerEnd, new Vector2(0, 149), null, Color.White, 0f, Vector2.Zero, 619 / 1280f, SpriteEffects.None, 0);
                 }
                 else if (dialerCounter > 240)
                 {
-                    spriteBatch.Draw(dialerCall, new Vector2(0, 0), null, Color.White, 0f, Vector2.Zero, 768 / 1280f, SpriteEffects.None, 0);
+                    spriteBatch.Draw(dialerCall, new Vector2(0, 149), null, Color.White, 0f, Vector2.Zero, 619 / 1280f, SpriteEffects.None, 0);
                 }
                 else if (dialerCounter > 180)
                 {
-                    spriteBatch.Draw(dialer911, new Vector2(0, 0), null, Color.White, 0f, Vector2.Zero, 768 / 1280f, SpriteEffects.None, 0);
+                    spriteBatch.Draw(dialer911, new Vector2(0, 149), null, Color.White, 0f, Vector2.Zero, 619 / 1280f, SpriteEffects.None, 0);
 
                 }
                 else if (dialerCounter > 120)
                 {
-                    spriteBatch.Draw(dialer91, new Vector2(0, 0), null, Color.White, 0f, Vector2.Zero, 768 / 1280f, SpriteEffects.None, 0);
+                    spriteBatch.Draw(dialer91, new Vector2(0, 149), null, Color.White, 0f, Vector2.Zero, 619 / 1280f, SpriteEffects.None, 0);
                 }
                 else if (dialerCounter > 60)
                 {
-                    spriteBatch.Draw(dialer9, new Vector2(0, 0), null, Color.White, 0f, Vector2.Zero, 768 / 1280f, SpriteEffects.None, 0);
+                    spriteBatch.Draw(dialer9, new Vector2(0, 149), null, Color.White, 0f, Vector2.Zero, 619 / 1280f, SpriteEffects.None, 0);
                 }
                 else
                 {
-                    spriteBatch.Draw(dialer, new Vector2(0, 0), null, Color.White, 0f, Vector2.Zero, 768 / 1280f, SpriteEffects.None, 0);
+                    spriteBatch.Draw(dialer, new Vector2(0, 149), null, Color.White, 0f, Vector2.Zero, 619 / 1280f, SpriteEffects.None, 0);
                 }
                 dialerCounter++;
             }

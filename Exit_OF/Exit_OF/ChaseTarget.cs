@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Input;
 namespace Exit_OF
 {
     class ChaseTarget
-    {private const float MinimumAltitude = 250.0f;
+    {private const float MinimumAltitude = -100f;
 
         public Model Model;
 
@@ -28,9 +28,9 @@ namespace Exit_OF
         /// <summary>
         /// Full speed at which ship can rotate; measured in radians per second.
         /// </summary>
-        private const float RotationRate = 1f;
+        private const float RotationRate = 0.8f;
         private const float Mass = 1.0f;
-        private const float ThrustForce = 5000.0f;
+        private const float ThrustForce = 500.0f;
         private const float DragFactor = 0.85f;
 
         public BoundingSphere boundingS;

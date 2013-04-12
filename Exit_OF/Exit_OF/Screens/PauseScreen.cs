@@ -20,6 +20,8 @@ namespace Exit_OF
         Button m_ContinueButton;
         Button m_RestartButton;
 
+        public bool IsPause = false;
+
         public override void Init(ContentManager content)
         {
             m_BackgroundImage = content.Load<Texture2D>(@"PauseScreen\pauseBackground");
@@ -44,7 +46,7 @@ namespace Exit_OF
 
         private void OnHoverContinueButton()
         {
-            m_ScreenManager.SelectScreen(Mode.HomeRScreen);
+            IsPause = false;
         }
 
         private void OnHoverRestartButton()

@@ -46,7 +46,7 @@ namespace Exit_OF
 
         private void OnHoverHomeButton()
         {
-            m_ScreenManager.SelectScreen(Mode.HomeRScreen);
+            m_ScreenManager.SelectScreen(Mode.HomeEScreen);
         }
 
         public override void Update(GameTime gameTime)

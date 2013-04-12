@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Content;
 
 namespace Exit_OF
 {
-    public enum Mode { TitleScreen, StageEScreen, SettingsScreen, HomeRScreen, ResultEScreen, PauseScreen }
+    public enum Mode { TitleScreen, StageEScreen, SettingsScreen, HomeEScreen, ResultEScreen, PauseScreen }
 
     class ScreenManager
     {
@@ -21,6 +21,11 @@ namespace Exit_OF
         {
             screen.Init(content);
             m_DicScreen.Add(mode, screen);
+        }
+
+        public void RemoveScreen(Mode mode)
+        {
+            m_DicScreen[mode] = null;
         }
 
         public void SelectScreen(Mode mode)

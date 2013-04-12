@@ -51,7 +51,7 @@ namespace Exit_OF
 
         private void OnHoverRestartButton()
         {
-            m_ScreenManager.SelectScreen(Mode.HomeRScreen);
+            m_ScreenManager.SelectScreen(Mode.HomeEScreen);
         }
 
         public override void Update(GameTime gameTime)

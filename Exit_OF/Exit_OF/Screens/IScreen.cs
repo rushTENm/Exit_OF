@@ -14,7 +14,7 @@ namespace Exit_OF
         static public ScreenManager m_ScreenManager;
 
         public virtual void Init(ContentManager content) { }
-        public virtual void Update(GameTime gameTIme) { }
+        public virtual void Update(GameTime gameTime) { }
         public virtual void Draw(SpriteBatch spriteBatch) { }
     }
 }
