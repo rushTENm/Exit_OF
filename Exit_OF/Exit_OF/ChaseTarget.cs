@@ -20,6 +20,7 @@ namespace Exit_OF
         float Scale;
 
         public Vector3 Position;
+        public Vector3 PositionTemp;
         public Vector3 Direction;
         public Vector3 Up;
         private Vector3 right;
@@ -139,7 +140,7 @@ namespace Exit_OF
             Velocity *= DragFactor;
 
             // Apply velocity
-            Position += Velocity * elapsed;
+            PositionTemp += Velocity * elapsed;
 
             // Prevent ship from flying under the ground
             Position.Y = Math.Max(Position.Y, MinimumAltitude);
@@ -151,7 +152,7 @@ namespace Exit_OF
             world.Right = right;
             world.Translation = Position;
 
-            boundingS.Center = Position;
+            boundingS.Center = PositionTemp;
         }
 
         public void DrawMeshes(ChaseCamera camera)

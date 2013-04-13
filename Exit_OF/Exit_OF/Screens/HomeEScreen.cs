@@ -46,9 +46,13 @@ namespace Exit_OF
 
         PauseScreen pauseScreen = new PauseScreen();
 
+        List<BoundingBox> boundingBs = new List<BoundingBox>();
         BoundingBox bbKitchen = new BoundingBox(new Vector3(-96, 20, -164), new Vector3(30, 80, -51));
         BoundingBox bbConnection = new BoundingBox(new Vector3(-144, 20, -51), new Vector3(-87, 80, 15));
-        BoundingBox bbLivingromm = new BoundingBox(new Vector3(-87, 20, -72), new Vector3(98, 80, 132));
+        BoundingBox bbLivingroom = new BoundingBox(new Vector3(-87, 20, -72), new Vector3(98, 80, 132));
+        BoundingBox bbDoor = new BoundingBox(new Vector3(38, 20, -145), new Vector3(98, 80, -81));
+        BoundingBox bbLivingroomDoor = new BoundingBox(new Vector3(57, 20, -82), new Vector3(80, 80, -72));
+        bool IsMovable = true;
 
         public HomeEScreen(Exit_OF game, GraphicsDevice device, ContentManager content)
         {
@@ -71,9 +75,16 @@ namespace Exit_OF
 
         public override void Init(ContentManager content)
         {
+            boundingBs.Add(bbConnection);
+            boundingBs.Add(bbDoor);
+            boundingBs.Add(bbKitchen);
+            boundingBs.Add(bbLivingroom);
+            boundingBs.Add(bbLivingroomDoor);
+
             target = new ChaseTarget();
             target.Init(content, 0.0002f, @"HomeRScreen\JustBall");
-            target.Position = new Vector3(80,50,83);
+            target.Position = new Vector3(80, 50, 83);
+            target.PositionTemp = new Vector3(80, 50, 83);
 
             camera = new ChaseCamera();
             UpdateCameraChaseTarget();
@@ -91,11 +102,11 @@ namespace Exit_OF
             fireHP.Init(content, 0.5f, 0f, new Vector3(-80, 40, 0), @"HomeRScreen\JustBall");
             fireHP.boundingS.Radius = 30;
 
-            extinguisherNomal.Init(content, 0.05f,-45f, new Vector3(28, 20, -70), @"HomeEScreen\extinguisherNomal");
+            extinguisherNomal.Init(content, 0.05f, -45f, new Vector3(28, 20, -70), @"HomeEScreen\extinguisherNomal");
             extinguisherNomal.boundingS.Radius = 15f;
             extinguisherNear.Init(content, 0.5f, 0f, new Vector3(28, 20, -70), @"HomeRScreen\JustBall");
 
-            extinguisherUse.Init(content, 0.02f,-45f, Vector3.Zero, @"HomeEScreen\extinguisherUse");
+            extinguisherUse.Init(content, 0.02f, -45f, Vector3.Zero, @"HomeEScreen\extinguisherUse");
 
             drawHelper.Init(content);
 
@@ -103,6 +114,18 @@ namespace Exit_OF
             fire.Init(content, @"HomeEScreen\fire", Vector2.Zero, 4, 4, 14, 3, 0.3f);
 
             pauseScreen.Init(content);
+        }
+
+        public bool bbContains(List<BoundingBox> boundingBs, BoundingSphere boundingS)
+        {
+            foreach (var boundingB in boundingBs)
+            {
+                if (boundingB.Contains(boundingS) == ContainmentType.Contains)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public override void Update(GameTime gameTime)
@@ -119,6 +142,11 @@ namespace Exit_OF
             if (drawHelper.m_IsStarted)
             {
                 PositionUpdate(gameTime);
+
+                if (bbContains(boundingBs, target.boundingS))
+                {
+                    target.Position = target.PositionTemp;
+                }
             }
 
             mouseState = Mouse.GetState();
@@ -150,11 +178,11 @@ namespace Exit_OF
                 drawHelper.HP--;
             }
 
-            if (drawHelper.HP < 0 || drawHelper.brave < 0 || fireStrength >3500)
+            if (drawHelper.HP < 0 || drawHelper.brave < 0 || fireStrength > 3500)
             {
                 m_ScreenManager.SelectScreen(Mode.ResultBadEScreen);
             }
-            if (fireStrength<=0)
+            if (fireStrength <= 0)
             {
                 m_ScreenManager.SelectScreen(Mode.ResultEScreen);
             }
@@ -230,14 +258,14 @@ namespace Exit_OF
                 extinguisherNomal.DrawMeshes(camera);
             }
 
-            if (IsFireNear && fireStrength >0)
+            if (IsFireNear && fireStrength > 0)
             {
                 extinguisherUse.DrawMeshes(camera);
                 fireStrength -= 4;
             }
             else
             {
-               fireStrength++;
+                fireStrength++;
             }
 
             particleComponent.Draw(spriteBatch, basicEffect, camera.projection, camera.view, fireStrength);
@@ -252,12 +280,15 @@ namespace Exit_OF
                 drawHelper.DrawDialer(spriteBatch);
             }
 
-            if (!drawHelper.Isdialed)
+            if (fireStrength > 2900)
+            {
+                spriteBatch.Draw(drawHelper.fireTooStr, Vector2.Zero, Color.White);
+            }
+            else if (!drawHelper.Isdialed)
             {
                 spriteBatch.Draw(drawHelper.MustCall, Vector2.Zero, Color.White);
             }
-
-            if (target.boundingS.Intersects(fireBrave.boundingS) && IsExtinguisherGet)
+            else if (target.boundingS.Intersects(fireBrave.boundingS) && IsExtinguisherGet)
             {
                 spriteBatch.Draw(drawHelper.loseBrave, Vector2.Zero, Color.White);
             }
@@ -265,13 +296,9 @@ namespace Exit_OF
             {
                 spriteBatch.Draw(drawHelper.loseHP, Vector2.Zero, Color.White);
             }
-            else if (fireStrength > 2900)
-            {
-                spriteBatch.Draw(drawHelper.fireTooStr, Vector2.Zero, Color.White);
-            }
 
             spriteBatch.End();
-            
+
             if (pauseScreen.IsPause)
             {
                 pauseScreen.Draw(spriteBatch);
