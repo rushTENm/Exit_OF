@@ -11,8 +11,6 @@ namespace Exit_OF
 {
     class HomeEScreen : IScreen
     {
-        MouseState mouseState;
-
         KeyboardState lastKeyboardState = new KeyboardState();
         KeyboardState currentKeyboardState = new KeyboardState();
 
@@ -32,6 +30,10 @@ namespace Exit_OF
 
         PauseScreen pauseScreen = new PauseScreen();
 
+        BoundingBox bbKitchen = new BoundingBox(new Vector3(-96, 20, -164), new Vector3(30, 80, -51));
+        BoundingBox bbConnection = new BoundingBox(new Vector3(-144, 20, -51), new Vector3(-87, 80, 15));
+        BoundingBox bbLivingromm = new BoundingBox(new Vector3(-87, 20, -72), new Vector3(98, 80, 132));
+
         public HomeEScreen(Exit_OF game, GraphicsDevice device, ContentManager content)
         {
             ParticleInit(game, device, content);
@@ -49,16 +51,13 @@ namespace Exit_OF
             };
 
             particleComponent.LoadContent(content);
-
-            fire = new SpriteAnimation();
-            fire.Init(content, "fire", Vector2.Zero, 4, 4, 14, 3, 2f);
         }
 
         public override void Init(ContentManager content)
         {
             target = new ChaseTarget();
             target.Init(content, 0.0002f, @"HomeRScreen\JustBall");
-            target.Position = new Vector3(0, 50, 0);
+            target.Position = new Vector3(80,50,83);
 
             camera = new ChaseCamera();
 
@@ -66,11 +65,15 @@ namespace Exit_OF
             camera.Reset();
 
             // homeModelHelper.Init(content);
-            phone.Init(content, 1f, new Vector3(0,50,0), @"HomeEScreen\phone");
+            phone.Init(content, 1f, new Vector3(38, 33, 83), @"HomeEScreen\phone");
+            phone.boundingS.Radius = 5f;
             tutorial.Init(content, 1f, Vector3.Zero, @"HomeEScreen\Tutorial");
 
             drawHelper.Init(content);
             pauseScreen.Init(content);
+
+            fire = new SpriteAnimation();
+            fire.Init(content, "fire", Vector2.Zero, 4, 4, 14, 3, 0.3f);
         }
 
         public override void Update(GameTime gameTime)
@@ -82,6 +85,39 @@ namespace Exit_OF
             {
                 pauseScreen.IsPause = !pauseScreen.IsPause;
             }
+
+            particleComponent.Update(gameTime);
+            fire.Update();
+
+            
+        }
+
+        public Ray CalculateRay(Vector2 mouseLocation, Matrix view,
+                Matrix projection, Viewport viewport)
+        {
+            Vector3 nearPoint = viewport.Unproject(new Vector3(mouseLocation.X,
+                    mouseLocation.Y, 0.0f),
+                    projection,
+                    view,
+                    Matrix.Identity);
+
+            Vector3 farPoint = viewport.Unproject(new Vector3(mouseLocation.X,
+                    mouseLocation.Y, 1.0f),
+                    projection,
+                    view,
+                    Matrix.Identity);
+
+            Vector3 direction = farPoint - nearPoint;
+            direction.Normalize();
+
+            return new Ray(nearPoint, direction);
+        }
+
+        public float? IntersectDistance(BoundingSphere sphere, Vector2 mouseLocation,
+            Matrix view, Matrix projection, Viewport viewport)
+        {
+            Ray mouseRay = CalculateRay(mouseLocation, view, projection, viewport);
+            return mouseRay.Intersects(sphere);
         }
 
         private void PositionUpdate(GameTime gameTime)
@@ -133,7 +169,18 @@ namespace Exit_OF
             phone.DrawMeshes(camera);
             tutorial.DrawMeshes(camera);
 
+            particleComponent.Draw(spriteBatch, basicEffect, camera.projection, camera.view);
+            fire.Draw(spriteBatch, basicEffect, camera.projection, camera.View);
+
             drawHelper.Draw(spriteBatch);
+            Vector2 mouseLocation = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
+
+            if (IntersectDistance(phone.boundingS, mouseLocation, camera.view, camera.projection, new Viewport(0, 0, 1366, 768)) != null)
+            {
+                spriteBatch.Begin();
+                drawHelper.DrawDialer(spriteBatch);
+                spriteBatch.End();
+            }
 
             if (pauseScreen.IsPause)
             {

@@ -122,6 +122,8 @@ namespace Exit_OF
             float thrustAmount = 0;
             if (keyboardState.IsKeyDown(Keys.Space))
                 thrustAmount = 1.0f;
+            if (keyboardState.IsKeyDown(Keys.B))
+                thrustAmount = -1.0f;
 
             // Calculate force from thrust amount
             Vector3 force = Direction * thrustAmount * ThrustForce;
@@ -147,7 +149,6 @@ namespace Exit_OF
             world.Translation = Position;
 
             boundingS.Center = Position;
-            boundingS.Radius = 500;
         }
 
         public void DrawMeshes(ChaseCamera camera)

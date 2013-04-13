@@ -24,13 +24,7 @@ namespace Exit_OF
             Scale = scale;
             Position = position;
 
-            boundingS = new BoundingSphere(Model.Meshes[0].BoundingSphere.Center, Model.Meshes[0].BoundingSphere.Radius);
-            foreach (ModelMesh mesh in Model.Meshes)
-            {
-                boundingS = BoundingSphere.CreateMerged(boundingS, mesh.BoundingSphere);
-            }
-            boundingS.Radius *= scale;
-            boundingS.Center = position;
+            boundingS = new BoundingSphere(position, Model.Meshes[0].BoundingSphere.Radius);
         }
 
         public void DrawMeshes(ChaseCamera Camera)

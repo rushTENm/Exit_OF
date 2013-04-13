@@ -14,6 +14,9 @@ namespace Exit_OF
         Texture2D Texture;
 
         Vector2 m_Position;
+        Vector3 viewSpacePosition;
+
+        Matrix invertY = Matrix.CreateScale(1, -1, 1);
 
         int m_FrameCounter = 0;
         int m_WaitCounter = 0;
@@ -64,17 +67,19 @@ namespace Exit_OF
             columnPositon = m_FrameCounter % m_Column;
         }
 
-        public void Draw(SpriteBatch spriteBatch, BasicEffect basicEffect, ChaseCamera camera, Vector3 cameraFront)
+        public void Draw(SpriteBatch spriteBatch, BasicEffect basicEffect, Matrix projection, Matrix view)
         {
-            Vector3 textPosition = new Vector3(-1350, 350, 1100);
-
-            basicEffect.World = Matrix.CreateConstrainedBillboard(textPosition, textPosition - cameraFront, Vector3.Down, null, null);
-            basicEffect.View = camera.view;
-            basicEffect.Projection = camera.projection;
+            Vector3 position = new Vector3(-80, 43, 0);
+            
+            basicEffect.World = invertY;
+            basicEffect.View = Matrix.Identity;
+            basicEffect.Projection = projection;
 
             spriteBatch.Begin(0, null, null, DepthStencilState.DepthRead, RasterizerState.CullNone, basicEffect);
 
-            spriteBatch.Draw(Texture, Vector2.Zero, new Rectangle(columnPositon * m_Width, rowPositon * m_Height, m_Width, m_Height), Color.White, 0f, Vector2.Zero, m_Scale, 0, 0);
+            viewSpacePosition = Vector3.Transform(position, view * invertY);
+
+            spriteBatch.Draw(Texture, Vector2.Zero + new Vector2(viewSpacePosition.X, viewSpacePosition.Y), new Rectangle(columnPositon * m_Width, rowPositon * m_Height, m_Width, m_Height), Color.White, 0f, new Vector2(m_Width/2,m_Height/2), m_Scale, 0, viewSpacePosition.Z);
 
             spriteBatch.End();
         }

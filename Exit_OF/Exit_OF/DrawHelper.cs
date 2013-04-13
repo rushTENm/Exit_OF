@@ -25,7 +25,7 @@ namespace Exit_OF
         Texture2D dialer911;
         Texture2D dialerCall;
         Texture2D dialerEnd;
-        public bool Isdialer = true;
+        public bool Isdialer = false;
         public int dialerCounter = 0;
 
         Texture2D inventory;
@@ -56,8 +56,6 @@ namespace Exit_OF
             spriteBatch.Begin();
 
             DrawGo(spriteBatch);
-
-            DrawDialer(spriteBatch);
 
             spriteBatch.Draw(inventory, Vector2.Zero, Color.White);
             spriteBatch.Draw(barRed, new Vector2(1104,28),Color.White);
@@ -95,7 +93,7 @@ namespace Exit_OF
             }
         }
 
-        private void DrawDialer(SpriteBatch spriteBatch)
+        public void DrawDialer(SpriteBatch spriteBatch)
         {
             if (Isdialer == false)
             {
@@ -114,7 +112,6 @@ namespace Exit_OF
                 else if (dialerCounter > 180)
                 {
                     spriteBatch.Draw(dialer911, new Vector2(0, 149), null, Color.White, 0f, Vector2.Zero, 619 / 1280f, SpriteEffects.None, 0);
-
                 }
                 else if (dialerCounter > 120)
                 {

@@ -49,7 +49,6 @@ namespace Exit_OF
             m_ScreenManager.AddScreen(Mode.StageEScreen, new StageEScreen(), Content);
             m_ScreenManager.AddScreen(Mode.ResultEScreen, new ResultEScreen(), Content);
             m_ScreenManager.AddScreen(Mode.HomeEScreen, new HomeEScreen(this, GraphicsDevice, Content), Content);
-            m_ScreenManager.AddScreen(Mode.PauseScreen, new PauseScreen(), Content);
 
             m_ScreenManager.SelectScreen(Mode.TitleScreen);
         }
