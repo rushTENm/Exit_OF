@@ -35,7 +35,7 @@ namespace Exit_OF
             get { return desiredPositionOffset; }
             set { desiredPositionOffset = value; }
         }
-        private Vector3 desiredPositionOffset = new Vector3(0, 0f, 2f);
+        private Vector3 desiredPositionOffset = new Vector3(0, 0f, 20f);
 
         public Vector3 DesiredPosition
         {

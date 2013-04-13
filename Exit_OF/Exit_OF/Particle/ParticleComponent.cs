@@ -63,7 +63,7 @@ namespace Exit_OF
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch, BasicEffect basicEffect, Matrix projection, Matrix view)
+        public void Draw(SpriteBatch spriteBatch, BasicEffect basicEffect, Matrix projection, Matrix view, int fireStr)
         {
             basicEffect.World = invertY;
             basicEffect.View = Matrix.Identity;
@@ -77,7 +77,7 @@ namespace Exit_OF
 
                 foreach (Particle particle in emitter.ParticleList)
                 {
-                    spriteBatch.Draw(particle.Texture, (particle.Position * 0.05f) + new Vector2(viewSpacePosition.X, viewSpacePosition.Y), null, particle.Color, particle.Rotation, particle.Center, particle.Scale, 0, viewSpacePosition.Z);
+                    spriteBatch.Draw(particle.Texture, (particle.Position * 0.05f) + new Vector2(viewSpacePosition.X, viewSpacePosition.Y), null, particle.Color, particle.Rotation, particle.Center, particle.Scale * fireStr/2000, 0, viewSpacePosition.Z);
                 }
             }
 

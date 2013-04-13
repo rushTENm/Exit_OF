@@ -67,7 +67,7 @@ namespace Exit_OF
             columnPositon = m_FrameCounter % m_Column;
         }
 
-        public void Draw(SpriteBatch spriteBatch, BasicEffect basicEffect, Matrix projection, Matrix view)
+        public void Draw(SpriteBatch spriteBatch, BasicEffect basicEffect, Matrix projection, Matrix view, int firStr)
         {
             Vector3 position = new Vector3(-80, 43, 0);
             
@@ -79,7 +79,7 @@ namespace Exit_OF
 
             viewSpacePosition = Vector3.Transform(position, view * invertY);
 
-            spriteBatch.Draw(Texture, Vector2.Zero + new Vector2(viewSpacePosition.X, viewSpacePosition.Y), new Rectangle(columnPositon * m_Width, rowPositon * m_Height, m_Width, m_Height), Color.White, 0f, new Vector2(m_Width/2,m_Height/2), m_Scale, 0, viewSpacePosition.Z);
+            spriteBatch.Draw(Texture, Vector2.Zero + new Vector2(viewSpacePosition.X, viewSpacePosition.Y), new Rectangle(columnPositon * m_Width, rowPositon * m_Height, m_Width, m_Height), Color.White, 0f, new Vector2(m_Width/2,m_Height/2), m_Scale*firStr/2000, 0, viewSpacePosition.Z);
 
             spriteBatch.End();
         }

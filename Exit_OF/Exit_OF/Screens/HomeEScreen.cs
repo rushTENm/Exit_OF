@@ -17,14 +17,25 @@ namespace Exit_OF
         ParticleComponent particleComponent;
         BasicEffect basicEffect;
         SpriteAnimation fire;
+        int fireStr = 1000;
 
         ChaseTarget target;
         ChaseCamera camera;
         bool cameraSpringEnabled = true;
 
         // HomeModelHelper homeModelHelper = new HomeModelHelper();
-        GameModel phone = new GameModel();
         GameModel tutorial = new GameModel();
+        GameModel phone = new GameModel();
+        GameModel fireIndicator = new GameModel();
+        GameModel fireBrave = new GameModel();
+        GameModel fireHP = new GameModel();
+        bool IsFireNear = false;
+        bool IsFireBrave = false;
+        bool isFireHP = false;
+        GameModel extinguisherNomal = new GameModel();
+        GameModel extinguisherNear = new GameModel();
+        bool IsExtinguisherGet = false;
+        GameModel extinguisherUse = new GameModel();
 
         DrawHelper drawHelper = new DrawHelper();
 
@@ -65,9 +76,20 @@ namespace Exit_OF
             camera.Reset();
 
             // homeModelHelper.Init(content);
-            phone.Init(content, 1f, new Vector3(38, 33, 83), @"HomeEScreen\phone");
+            phone.Init(content, 1f, 0f, new Vector3(38, 33, 83), @"HomeEScreen\phone");
             phone.boundingS.Radius = 5f;
-            tutorial.Init(content, 1f, Vector3.Zero, @"HomeEScreen\Tutorial");
+            tutorial.Init(content, 1f, 0f, Vector3.Zero, @"HomeEScreen\Tutorial");
+            extinguisherNomal.Init(content, 0.05f,-45f, new Vector3(28, 20, -70), @"HomeEScreen\extinguisherNomal");
+            extinguisherNomal.boundingS.Radius = 7f;
+            extinguisherNear.Init(content, 0.5f, 0f, new Vector3(28, 20, -70), @"HomeRScreen\JustBall");
+            fireIndicator.boundingS.Radius = 70;
+            fireIndicator.Init(content, 0.5f, 0f, new Vector3(-80, 40, 0), @"HomeRScreen\JustBall");
+            fireIndicator.boundingS.Radius = 50;
+            fireBrave.Init(content, 0.5f, 0f, new Vector3(-80, 40, 0), @"HomeRScreen\JustBall");
+            fireBrave.boundingS.Radius = 40;
+            fireHP.Init(content, 0.5f, 0f, new Vector3(-80, 40, 0), @"HomeRScreen\JustBall");
+            fireHP.boundingS.Radius = 30;
+            extinguisherUse.Init(content, 0.02f,-45f, Vector3.Zero, @"HomeEScreen\extinguisherUse");
 
             drawHelper.Init(content);
             pauseScreen.Init(content);
@@ -78,8 +100,6 @@ namespace Exit_OF
 
         public override void Update(GameTime gameTime)
         {
-            PositionUpdate(gameTime);
-
             pauseScreen.Update(gameTime);
             if (lastKeyboardState.IsKeyUp(Keys.P) && (currentKeyboardState.IsKeyDown(Keys.P)))
             {
@@ -89,7 +109,56 @@ namespace Exit_OF
             particleComponent.Update(gameTime);
             fire.Update();
 
-            
+            if (drawHelper.m_IsStarted)
+            {
+                PositionUpdate(gameTime);
+            }
+
+            Vector2 mouseLocation = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
+
+            if (IntersectDistance(extinguisherNomal.boundingS, mouseLocation, camera.view, camera.projection, new Viewport(0, 0, 1366, 768)) != null &&
+                target.boundingS.Intersects(extinguisherNear.boundingS) &&
+                drawHelper.Isdialer)
+            {
+                IsExtinguisherGet = true;
+                drawHelper.IsExtinguisherGet = true;
+            }
+            if (target.boundingS.Intersects(fireIndicator.boundingS) && IsExtinguisherGet)
+            {
+                IsFireNear = true;
+                extinguisherUse.Position = target.Position - new Vector3(0, 9, 0);
+            }
+            else
+            {
+                IsFireNear = false;
+            }
+
+            if (target.boundingS.Intersects(fireBrave.boundingS) && IsExtinguisherGet)
+            {
+                drawHelper.brave--;
+            }
+            else
+            {
+                IsFireBrave = false;
+            }
+
+            if (target.boundingS.Intersects(fireHP.boundingS) && IsExtinguisherGet)
+            {
+                drawHelper.HP--;
+            }
+            else
+            {
+                isFireHP = false;
+            }
+
+            if (drawHelper.HP < 0 || drawHelper.brave < 0 || fireStr >2500)
+            {
+                m_ScreenManager.SelectScreen(Mode.ResultBadEScreen);
+            }
+            if (fireStr<=0)
+            {
+                m_ScreenManager.SelectScreen(Mode.ResultEScreen);
+            }
         }
 
         public Ray CalculateRay(Vector2 mouseLocation, Matrix view,
@@ -168,9 +237,21 @@ namespace Exit_OF
             // homeModelHelper.Draw(camera);
             phone.DrawMeshes(camera);
             tutorial.DrawMeshes(camera);
-
-            particleComponent.Draw(spriteBatch, basicEffect, camera.projection, camera.view);
-            fire.Draw(spriteBatch, basicEffect, camera.projection, camera.View);
+            if (!IsExtinguisherGet)
+            {
+                extinguisherNomal.DrawMeshes(camera);
+            }
+            if (IsFireNear && fireStr >0)
+            {
+                extinguisherUse.DrawMeshes(camera);
+                fireStr -= 3;
+            }
+            else
+            {
+               fireStr++;
+            }
+            particleComponent.Draw(spriteBatch, basicEffect, camera.projection, camera.view, fireStr);
+            fire.Draw(spriteBatch, basicEffect, camera.projection, camera.View, fireStr);
 
             drawHelper.Draw(spriteBatch);
             Vector2 mouseLocation = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);

@@ -80,6 +80,7 @@
     <Compile Include="ChaseCamera.cs" />
     <Compile Include="ChaseTarget.cs" />
     <Compile Include="DrawHelper.cs" />
+    <Compile Include="ResultBadEScreen.cs" />
     <Compile Include="Screens\HomeEScreen.cs" />
     <Compile Include="HomeModelHelper.cs" />
     <Compile Include="Particle\Emitter.cs" />

@@ -14,14 +14,16 @@ namespace Exit_OF
         public Model Model;
         public Vector3 Position = Vector3.Zero;
         float Scale;
+        float m_Rotation;
 
         public BoundingSphere boundingS;
 
-        public void Init(ContentManager content, float scale, Vector3 position, string FileLoaction)
+        public void Init(ContentManager content, float scale, float rotation, Vector3 position, string FileLoaction)
         {
             Model = content.Load<Model>(FileLoaction);
 
             Scale = scale;
+            m_Rotation = rotation;
             Position = position;
 
             boundingS = new BoundingSphere(position, Model.Meshes[0].BoundingSphere.Radius);
@@ -39,7 +41,7 @@ namespace Exit_OF
                     effect.EnableDefaultLighting();
                     effect.PreferPerPixelLighting = true;
 
-                    effect.World = boneTransforms[mesh.ParentBone.Index] * Matrix.CreateScale(Scale) * Matrix.CreateTranslation(Position);
+                    effect.World = boneTransforms[mesh.ParentBone.Index] * Matrix.CreateScale(Scale) * Matrix.CreateRotationY(MathHelper.ToRadians(m_Rotation)) * Matrix.CreateTranslation(Position);
                     effect.Projection = Camera.Projection;
                     effect.View = Camera.View;
                 }

@@ -30,7 +30,14 @@ namespace Exit_OF
 
         Texture2D inventory;
         Texture2D barRed;
+        Texture2D barRedEdge;
         Texture2D barGreen;
+        Texture2D barGreenEdge;
+        public int HP = 1000;
+        public int brave = 3000;
+        Texture2D itemEdge;
+        Texture2D extinguisher2D;
+        public bool IsExtinguisherGet;
 
         public void Init(ContentManager content)
         {
@@ -48,7 +55,11 @@ namespace Exit_OF
 
             inventory = content.Load<Texture2D>(@"HomeRScreen\inventory");
             barRed = content.Load<Texture2D>(@"HomeRScreen\barRed");
+            barRedEdge = content.Load<Texture2D>(@"HomeRScreen\barEdge");
             barGreen = content.Load<Texture2D>(@"HomeRScreen\barGreen");
+            barGreenEdge = content.Load<Texture2D>(@"HomeRScreen\barEdge");
+            itemEdge = content.Load<Texture2D>(@"HomeRScreen\itemEdge");
+            extinguisher2D = content.Load<Texture2D>(@"HomeRScreen\extinguisher2D");
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -58,9 +69,21 @@ namespace Exit_OF
             DrawGo(spriteBatch);
 
             spriteBatch.Draw(inventory, Vector2.Zero, Color.White);
-            spriteBatch.Draw(barRed, new Vector2(1104,28),Color.White);
-            spriteBatch.Draw(barGreen, new Vector2(1104,88), Color.White);
-
+            spriteBatch.Draw(barRed, new Vector2(1104,28),new Rectangle(0,0,barRed.Width * HP / 1000, barRed.Height), Color.White);
+            if (HP/30%2==0)
+            {
+                spriteBatch.Draw(barRedEdge, new Vector2(993, 23), Color.White);
+            }
+            spriteBatch.Draw(barGreen, new Vector2(1104,88), new Rectangle(0,0,barGreen.Width * brave /3000, barGreen.Height), Color.White);
+            if (brave / 30 % 2 == 1)
+            {
+                spriteBatch.Draw(barGreenEdge, new Vector2(994, 83), Color.White);
+            }
+            if (IsExtinguisherGet)
+            {
+                spriteBatch.Draw(extinguisher2D, new Vector2(299, 24), Color.White);
+                spriteBatch.Draw(itemEdge, new Vector2(299, 24), Color.White);
+            }
             spriteBatch.End();
         }
 

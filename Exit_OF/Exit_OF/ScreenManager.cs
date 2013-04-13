@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Content;
 
 namespace Exit_OF
 {
-    public enum Mode { TitleScreen, StageEScreen, SettingsScreen, HomeEScreen, ResultEScreen, PauseScreen }
+    public enum Mode { TitleScreen, StageEScreen, SettingsScreen, HomeEScreen, ResultEScreen, ResultBadEScreen, PauseScreen }
 
     class ScreenManager
     {

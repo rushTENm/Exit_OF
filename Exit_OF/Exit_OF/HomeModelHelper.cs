@@ -32,26 +32,26 @@ namespace Exit_OF
 
         public void Init(ContentManager content)
         {
-            homeBathroom.Init(content, 1f, Vector3.Zero, @"HomeEScreen\home\homeBathroom");
-            homeBathroomSink.Init(content, 1f, Vector3.Zero, @"HomeEScreen\home\homeBathroomSink");
-            homeCeiling.Init(content, 1f, Vector3.Zero, @"HomeEScreen\home\homeCeiling");
-            homeCouch.Init(content, 1f, Vector3.Zero, @"HomeEScreen\home\homeCouch");
-            homeCurtain.Init(content, 1f, Vector3.Zero, @"HomeEScreen\home\homeCurtain");
-            homeDoor.Init(content, 1f, Vector3.Zero, @"HomeEScreen\home\homeDoor");
-            homeElevator.Init(content, 1f, Vector3.Zero, @"HomeEScreen\home\homeElevator");
-            homeFloor.Init(content, 1, Vector3.Zero, @"HomeEScreen\home\homeFloor");
-            homeKitchenSink.Init(content, 1f, Vector3.Zero, @"HomeEScreen\home\homeKitchenSink");
-            homeKitchenTable.Init(content, 1f, Vector3.Zero, @"HomeEScreen\home\homeKitchenTable");
-            homeKitchenware.Init(content, 1f, Vector3.Zero, @"HomeEScreen\home\homeKitchenware");
-            homeRoomBig.Init(content, 1f, Vector3.Zero, @"HomeEScreen\home\homeRoomBig");
-            homeRoomSmall.Init(content, 1f, Vector3.Zero, @"HomeEScreen\home\homeRoomSmall");
-            homeRoomSmallBed.Init(content, 1f, Vector3.Zero, @"HomeEScreen\home\homeRoomSmallBed");
-            homeRoomSmallChest.Init(content, 1f, Vector3.Zero, @"HomeEScreen\home\homeRoomSmallChest");
-            homeStairs.Init(content, 1f, Vector3.Zero, @"HomeEScreen\home\homeStairs");
-            homeTable.Init(content, 1f, Vector3.Zero, @"HomeEScreen\home\homeTable");
-            homeTV.Init(content, 1f, Vector3.Zero, @"HomeEScreen\home\homeTV");
-            homeWallFront.Init(content, 1f, Vector3.Zero, @"HomeEScreen\home\homeWallFront");
-            homeWindow.Init(content, 1f, Vector3.Zero, @"HomeEScreen\home\homeWindow");
+            homeBathroom.Init(content, 1f,0f, Vector3.Zero, @"HomeEScreen\home\homeBathroom");
+            homeBathroomSink.Init(content, 1f,0f, Vector3.Zero, @"HomeEScreen\home\homeBathroomSink");
+            homeCeiling.Init(content, 1f,0f, Vector3.Zero, @"HomeEScreen\home\homeCeiling");
+            homeCouch.Init(content, 1f,0f, Vector3.Zero, @"HomeEScreen\home\homeCouch");
+            homeCurtain.Init(content, 1f,0f, Vector3.Zero, @"HomeEScreen\home\homeCurtain");
+            homeDoor.Init(content, 1f,0f, Vector3.Zero, @"HomeEScreen\home\homeDoor");
+            homeElevator.Init(content, 1f,0f, Vector3.Zero, @"HomeEScreen\home\homeElevator");
+            homeFloor.Init(content, 1, 0f,Vector3.Zero, @"HomeEScreen\home\homeFloor");
+            homeKitchenSink.Init(content, 1f,0f, Vector3.Zero, @"HomeEScreen\home\homeKitchenSink");
+            homeKitchenTable.Init(content, 1f,0f, Vector3.Zero, @"HomeEScreen\home\homeKitchenTable");
+            homeKitchenware.Init(content, 1f,0f, Vector3.Zero, @"HomeEScreen\home\homeKitchenware");
+            homeRoomBig.Init(content, 1f,0f, Vector3.Zero, @"HomeEScreen\home\homeRoomBig");
+            homeRoomSmall.Init(content, 1f,0f, Vector3.Zero, @"HomeEScreen\home\homeRoomSmall");
+            homeRoomSmallBed.Init(content, 1f,0f, Vector3.Zero, @"HomeEScreen\home\homeRoomSmallBed");
+            homeRoomSmallChest.Init(content, 1f,0f, Vector3.Zero, @"HomeEScreen\home\homeRoomSmallChest");
+            homeStairs.Init(content, 1f,0f, Vector3.Zero, @"HomeEScreen\home\homeStairs");
+            homeTable.Init(content, 1f,0f, Vector3.Zero, @"HomeEScreen\home\homeTable");
+            homeTV.Init(content, 1f,0f, Vector3.Zero, @"HomeEScreen\home\homeTV");
+            homeWallFront.Init(content, 1f,0f, Vector3.Zero, @"HomeEScreen\home\homeWallFront");
+            homeWindow.Init(content, 1f,0f, Vector3.Zero, @"HomeEScreen\home\homeWindow");
         }
 
         public void Draw(ChaseCamera camera)
