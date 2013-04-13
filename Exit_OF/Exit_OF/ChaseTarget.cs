@@ -10,8 +10,10 @@ using Microsoft.Xna.Framework.Input;
 namespace Exit_OF
 {
     class ChaseTarget
-    {private const float MinimumAltitude = -100f;
+    {
+        private const float MinimumAltitude = 20f;
 
+        KinectHelper kinect = new KinectHelper();
         public Model Model;
 
         float Scale;
@@ -69,19 +71,22 @@ namespace Exit_OF
                 boundingS = BoundingSphere.CreateMerged(boundingS, mesh.BoundingSphere);
             }
             boundingS.Radius *= scale;
+
+            kinect.Init(content);
         }
 
         public void Update(GameTime gameTime)
         {
             KeyboardState keyboardState = Keyboard.GetState();
+            kinect.Update();
 
             float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             // Determine rotation amount from input
             Vector2 rotationAmount = Vector2.Zero;
-            if (keyboardState.IsKeyDown(Keys.Left))
+            if (keyboardState.IsKeyDown(Keys.Left) || kinect.shoulderLR == KinectHelper.LR.left)
                 rotationAmount.X = 1.0f;
-            if (keyboardState.IsKeyDown(Keys.Right))
+            if (keyboardState.IsKeyDown(Keys.Right) || kinect.shoulderLR == KinectHelper.LR.right)
                 rotationAmount.X = -1.0f;
             if (keyboardState.IsKeyDown(Keys.Up))
                 rotationAmount.Y = -1.0f;
@@ -120,7 +125,7 @@ namespace Exit_OF
 
             // Determine thrust amount from input
             float thrustAmount = 0;
-            if (keyboardState.IsKeyDown(Keys.Space))
+            if (keyboardState.IsKeyDown(Keys.Space) || kinect.standing == KinectHelper.Standing.walking)
                 thrustAmount = 1.0f;
             if (keyboardState.IsKeyDown(Keys.B))
                 thrustAmount = -1.0f;

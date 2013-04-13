@@ -20,6 +20,8 @@ namespace Exit_OF
 
         MouseState mouseState;
 
+        KinectHelper kinect = new KinectHelper();
+
         public override void Init(ContentManager content)
         {
             m_BackgroundImage = content.Load<Texture2D>(@"TitleScreen\titleBackground");
@@ -35,6 +37,8 @@ namespace Exit_OF
             m_SettingButton = new Button();
             m_SettingButton.Init(content, new Vector2(20, 598), @"TitleScreen\settingsNomal", @"TitleScreen\settingsHover");
             m_SettingButton.UserEvent = OnHoverSettingButton;
+
+            //kinect.Init(content);
         }
 
         private void OnHoverDrillButton()
@@ -58,6 +62,8 @@ namespace Exit_OF
             m_DrillButton.Update(mouseState);
             m_ExitButton.Update(mouseState);
             m_SettingButton.Update(mouseState);
+
+            //kinect.Update();
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -71,6 +77,8 @@ namespace Exit_OF
             m_SettingButton.Draw(spriteBatch);
 
             spriteBatch.End();
+
+            kinect.Draw(spriteBatch);
         }
     }
 }

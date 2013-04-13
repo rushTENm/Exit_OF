@@ -23,21 +23,22 @@ namespace Exit_OF
         ChaseCamera camera;
         bool cameraSpringEnabled = true;
 
-        // HomeModelHelper homeModelHelper = new HomeModelHelper();
+        HomeModelHelper homeModelHelper = new HomeModelHelper();
         GameModel tutorial = new GameModel();
         GameModel phone = new GameModel();
         GameModel fireIndicator = new GameModel();
         GameModel fireBrave = new GameModel();
         GameModel fireHP = new GameModel();
         bool IsFireNear = false;
-        bool IsFireBrave = false;
-        bool isFireHP = false;
         GameModel extinguisherNomal = new GameModel();
         GameModel extinguisherNear = new GameModel();
         bool IsExtinguisherGet = false;
         GameModel extinguisherUse = new GameModel();
 
         DrawHelper drawHelper = new DrawHelper();
+        Texture2D fireBraveTex;
+        Texture2D fireHPTex;
+        Texture2D MushCall;
 
         PauseScreen pauseScreen = new PauseScreen();
 
@@ -75,12 +76,12 @@ namespace Exit_OF
             UpdateCameraChaseTarget();
             camera.Reset();
 
-            // homeModelHelper.Init(content);
+            homeModelHelper.Init(content);
             phone.Init(content, 1f, 0f, new Vector3(38, 33, 83), @"HomeEScreen\phone");
             phone.boundingS.Radius = 5f;
             tutorial.Init(content, 1f, 0f, Vector3.Zero, @"HomeEScreen\Tutorial");
             extinguisherNomal.Init(content, 0.05f,-45f, new Vector3(28, 20, -70), @"HomeEScreen\extinguisherNomal");
-            extinguisherNomal.boundingS.Radius = 7f;
+            extinguisherNomal.boundingS.Radius = 15f;
             extinguisherNear.Init(content, 0.5f, 0f, new Vector3(28, 20, -70), @"HomeRScreen\JustBall");
             fireIndicator.boundingS.Radius = 70;
             fireIndicator.Init(content, 0.5f, 0f, new Vector3(-80, 40, 0), @"HomeRScreen\JustBall");
@@ -96,6 +97,10 @@ namespace Exit_OF
 
             fire = new SpriteAnimation();
             fire.Init(content, "fire", Vector2.Zero, 4, 4, 14, 3, 0.3f);
+
+            fireBraveTex = content.Load<Texture2D>(@"IsFireBrave");
+            fireHPTex = content.Load<Texture2D>(@"IsFireHP");
+            MushCall = content.Load<Texture2D>(@"CallTex");
         }
 
         public override void Update(GameTime gameTime)
@@ -137,21 +142,13 @@ namespace Exit_OF
             {
                 drawHelper.brave--;
             }
-            else
-            {
-                IsFireBrave = false;
-            }
 
             if (target.boundingS.Intersects(fireHP.boundingS) && IsExtinguisherGet)
             {
                 drawHelper.HP--;
             }
-            else
-            {
-                isFireHP = false;
-            }
 
-            if (drawHelper.HP < 0 || drawHelper.brave < 0 || fireStr >2500)
+            if (drawHelper.HP < 0 || drawHelper.brave < 0 || fireStr >3500)
             {
                 m_ScreenManager.SelectScreen(Mode.ResultBadEScreen);
             }
@@ -234,7 +231,7 @@ namespace Exit_OF
         {
             target.DrawMeshes(camera);
 
-            // homeModelHelper.Draw(camera);
+            homeModelHelper.Draw(camera);
             phone.DrawMeshes(camera);
             tutorial.DrawMeshes(camera);
             if (!IsExtinguisherGet)
@@ -263,6 +260,22 @@ namespace Exit_OF
                 spriteBatch.End();
             }
 
+            spriteBatch.Begin();
+            if (target.boundingS.Intersects(fireBrave.boundingS) && IsExtinguisherGet)
+            {
+                spriteBatch.Draw(fireBraveTex, Vector2.Zero, Color.White);
+            }
+
+            if (target.boundingS.Intersects(fireHP.boundingS) && IsExtinguisherGet)
+            {
+                spriteBatch.Draw(fireHPTex, Vector2.Zero, Color.White);
+            }
+            if (!drawHelper.Isdialer)
+            {
+                spriteBatch.Draw(MushCall, Vector2.Zero, Color.White);
+            }
+            spriteBatch.End();
+            
             if (pauseScreen.IsPause)
             {
                 pauseScreen.Draw(spriteBatch);
