@@ -30,13 +30,6 @@
     <Reference Include="Microsoft.Xna.Framework.Content.Pipeline.VideoImporters, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="white.png">
-      <Name>white</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="TitleScreen\drillHover.png">
       <Name>drillHover</Name>
       <Importer>TextureImporter</Importer>
@@ -194,12 +187,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="fire.png">
+    <Compile Include="HomeEScreen\fire.png">
       <Name>fire</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="smoke.bmp">
+    <Compile Include="HomeEScreen\smoke.bmp">
       <Name>smoke</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
@@ -514,6 +507,13 @@
   <ItemGroup>
     <Compile Include="CallTex.png">
       <Name>CallTex</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="fireTooStr.png">
+      <Name>fireTooStr</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

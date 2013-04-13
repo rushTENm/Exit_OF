@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
@@ -26,7 +27,7 @@ namespace Exit_OF
             selectEdge = content.Load<Texture2D>(@"settingsScreen\selectEdge");
 
             m_BackButton = new Button();
-            m_BackButton.Init(content, new Vector2(6, 6), @"SettingsScreen\backNomal", @"SettingsScreen\backHover");
+            m_BackButton.Init(content, new Vector2(22,18), @"SettingsScreen\backNomal", @"SettingsScreen\backHover");
             m_BackButton.UserEvent = OnHoverBackButton;
         }
 

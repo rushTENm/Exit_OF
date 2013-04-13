@@ -81,7 +81,7 @@
     <Compile Include="ChaseTarget.cs" />
     <Compile Include="DrawHelper.cs" />
     <Compile Include="KinectHelper.cs" />
-    <Compile Include="ResultBadEScreen.cs" />
+    <Compile Include="Screens\ResultBadEScreen.cs" />
     <Compile Include="Screens\HomeEScreen.cs" />
     <Compile Include="HomeModelHelper.cs" />
     <Compile Include="Particle\Emitter.cs" />

@@ -1,4 +1,3 @@
-Content\white.xnb
 Content\TitleScreen\drillHover.xnb
 Content\TitleScreen\drillNomal.xnb
 Content\TitleScreen\titleBackground.xnb
@@ -15,8 +14,6 @@ Content\HomeRScreen\go1.xnb
 Content\HomeRScreen\go2.xnb
 Content\HomeRScreen\go3.xnb
 Content\HomeRScreen\gogo.xnb
-Content\fire.xnb
-Content\smoke.xnb
 Content\HomeRScreen\extinguisherNomal.xnb
 Content\HomeRScreen\extinguisherUse.xnb
 Content\HomeRScreen\homeSmall.xnb
@@ -83,3 +80,6 @@ Content\whiteDot.xnb
 Content\IsFireBrave.xnb
 Content\IsFireHP.xnb
 Content\CallTex.xnb
+Content\HomeEScreen\fire.xnb
+Content\HomeEScreen\smoke.xnb
+Content\fireTooStr.xnb

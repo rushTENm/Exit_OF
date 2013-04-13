@@ -15,6 +15,7 @@ namespace Exit_OF
 
         Vector2 m_Position;
         Vector3 viewSpacePosition;
+        Vector3 position = new Vector3(-80, 43, 0);
 
         Matrix invertY = Matrix.CreateScale(1, -1, 1);
 
@@ -69,8 +70,6 @@ namespace Exit_OF
 
         public void Draw(SpriteBatch spriteBatch, BasicEffect basicEffect, Matrix projection, Matrix view, int firStr)
         {
-            Vector3 position = new Vector3(-80, 43, 0);
-            
             basicEffect.World = invertY;
             basicEffect.View = Matrix.Identity;
             basicEffect.Projection = projection;

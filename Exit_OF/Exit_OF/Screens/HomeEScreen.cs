@@ -14,31 +14,35 @@ namespace Exit_OF
         KeyboardState lastKeyboardState = new KeyboardState();
         KeyboardState currentKeyboardState = new KeyboardState();
 
-        ParticleComponent particleComponent;
+        MouseState mouseState;
+
         BasicEffect basicEffect;
+
+        ParticleComponent particleComponent;
+
         SpriteAnimation fire;
-        int fireStr = 1000;
+        int fireStrength = 1000;
 
         ChaseTarget target;
         ChaseCamera camera;
         bool cameraSpringEnabled = true;
 
         HomeModelHelper homeModelHelper = new HomeModelHelper();
-        GameModel tutorial = new GameModel();
+        GameModel SimpleMap = new GameModel();
         GameModel phone = new GameModel();
+
         GameModel fireIndicator = new GameModel();
         GameModel fireBrave = new GameModel();
         GameModel fireHP = new GameModel();
         bool IsFireNear = false;
+
         GameModel extinguisherNomal = new GameModel();
         GameModel extinguisherNear = new GameModel();
         bool IsExtinguisherGet = false;
+
         GameModel extinguisherUse = new GameModel();
 
         DrawHelper drawHelper = new DrawHelper();
-        Texture2D fireBraveTex;
-        Texture2D fireHPTex;
-        Texture2D MushCall;
 
         PauseScreen pauseScreen = new PauseScreen();
 
@@ -72,35 +76,33 @@ namespace Exit_OF
             target.Position = new Vector3(80,50,83);
 
             camera = new ChaseCamera();
-
             UpdateCameraChaseTarget();
             camera.Reset();
 
             homeModelHelper.Init(content);
             phone.Init(content, 1f, 0f, new Vector3(38, 33, 83), @"HomeEScreen\phone");
             phone.boundingS.Radius = 5f;
-            tutorial.Init(content, 1f, 0f, Vector3.Zero, @"HomeEScreen\Tutorial");
-            extinguisherNomal.Init(content, 0.05f,-45f, new Vector3(28, 20, -70), @"HomeEScreen\extinguisherNomal");
-            extinguisherNomal.boundingS.Radius = 15f;
-            extinguisherNear.Init(content, 0.5f, 0f, new Vector3(28, 20, -70), @"HomeRScreen\JustBall");
-            fireIndicator.boundingS.Radius = 70;
+            SimpleMap.Init(content, 1f, 0f, Vector3.Zero, @"HomeEScreen\Tutorial");
+
             fireIndicator.Init(content, 0.5f, 0f, new Vector3(-80, 40, 0), @"HomeRScreen\JustBall");
             fireIndicator.boundingS.Radius = 50;
             fireBrave.Init(content, 0.5f, 0f, new Vector3(-80, 40, 0), @"HomeRScreen\JustBall");
             fireBrave.boundingS.Radius = 40;
             fireHP.Init(content, 0.5f, 0f, new Vector3(-80, 40, 0), @"HomeRScreen\JustBall");
             fireHP.boundingS.Radius = 30;
+
+            extinguisherNomal.Init(content, 0.05f,-45f, new Vector3(28, 20, -70), @"HomeEScreen\extinguisherNomal");
+            extinguisherNomal.boundingS.Radius = 15f;
+            extinguisherNear.Init(content, 0.5f, 0f, new Vector3(28, 20, -70), @"HomeRScreen\JustBall");
+
             extinguisherUse.Init(content, 0.02f,-45f, Vector3.Zero, @"HomeEScreen\extinguisherUse");
 
             drawHelper.Init(content);
-            pauseScreen.Init(content);
 
             fire = new SpriteAnimation();
-            fire.Init(content, "fire", Vector2.Zero, 4, 4, 14, 3, 0.3f);
+            fire.Init(content, @"HomeEScreen\fire", Vector2.Zero, 4, 4, 14, 3, 0.3f);
 
-            fireBraveTex = content.Load<Texture2D>(@"IsFireBrave");
-            fireHPTex = content.Load<Texture2D>(@"IsFireHP");
-            MushCall = content.Load<Texture2D>(@"CallTex");
+            pauseScreen.Init(content);
         }
 
         public override void Update(GameTime gameTime)
@@ -119,15 +121,16 @@ namespace Exit_OF
                 PositionUpdate(gameTime);
             }
 
-            Vector2 mouseLocation = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
+            mouseState = Mouse.GetState();
 
-            if (IntersectDistance(extinguisherNomal.boundingS, mouseLocation, camera.view, camera.projection, new Viewport(0, 0, 1366, 768)) != null &&
+            if (IntersectDistance(extinguisherNomal.boundingS, mouseState, camera.view, camera.projection, new Viewport(0, 0, 1366, 768)) != null &&
                 target.boundingS.Intersects(extinguisherNear.boundingS) &&
-                drawHelper.Isdialer)
+                drawHelper.Isdialed)
             {
                 IsExtinguisherGet = true;
                 drawHelper.IsExtinguisherGet = true;
             }
+
             if (target.boundingS.Intersects(fireIndicator.boundingS) && IsExtinguisherGet)
             {
                 IsFireNear = true;
@@ -138,40 +141,29 @@ namespace Exit_OF
                 IsFireNear = false;
             }
 
-            if (target.boundingS.Intersects(fireBrave.boundingS) && IsExtinguisherGet)
+            if (target.boundingS.Intersects(fireBrave.boundingS))
             {
                 drawHelper.brave--;
             }
-
-            if (target.boundingS.Intersects(fireHP.boundingS) && IsExtinguisherGet)
+            if (target.boundingS.Intersects(fireHP.boundingS))
             {
                 drawHelper.HP--;
             }
 
-            if (drawHelper.HP < 0 || drawHelper.brave < 0 || fireStr >3500)
+            if (drawHelper.HP < 0 || drawHelper.brave < 0 || fireStrength >3500)
             {
                 m_ScreenManager.SelectScreen(Mode.ResultBadEScreen);
             }
-            if (fireStr<=0)
+            if (fireStrength<=0)
             {
                 m_ScreenManager.SelectScreen(Mode.ResultEScreen);
             }
         }
 
-        public Ray CalculateRay(Vector2 mouseLocation, Matrix view,
-                Matrix projection, Viewport viewport)
+        public Ray CalculateRay(MouseState mouseState, Matrix view, Matrix projection, Viewport viewport)
         {
-            Vector3 nearPoint = viewport.Unproject(new Vector3(mouseLocation.X,
-                    mouseLocation.Y, 0.0f),
-                    projection,
-                    view,
-                    Matrix.Identity);
-
-            Vector3 farPoint = viewport.Unproject(new Vector3(mouseLocation.X,
-                    mouseLocation.Y, 1.0f),
-                    projection,
-                    view,
-                    Matrix.Identity);
+            Vector3 nearPoint = viewport.Unproject(new Vector3(mouseState.X, mouseState.Y, 0.0f), projection, view, Matrix.Identity);
+            Vector3 farPoint = viewport.Unproject(new Vector3(mouseState.X, mouseState.Y, 1.0f), projection, view, Matrix.Identity);
 
             Vector3 direction = farPoint - nearPoint;
             direction.Normalize();
@@ -179,10 +171,9 @@ namespace Exit_OF
             return new Ray(nearPoint, direction);
         }
 
-        public float? IntersectDistance(BoundingSphere sphere, Vector2 mouseLocation,
-            Matrix view, Matrix projection, Viewport viewport)
+        public float? IntersectDistance(BoundingSphere sphere, MouseState mouseState, Matrix view, Matrix projection, Viewport viewport)
         {
-            Ray mouseRay = CalculateRay(mouseLocation, view, projection, viewport);
+            Ray mouseRay = CalculateRay(mouseState, view, projection, viewport);
             return mouseRay.Intersects(sphere);
         }
 
@@ -230,50 +221,55 @@ namespace Exit_OF
         public override void Draw(SpriteBatch spriteBatch)
         {
             target.DrawMeshes(camera);
-
             homeModelHelper.Draw(camera);
             phone.DrawMeshes(camera);
-            tutorial.DrawMeshes(camera);
+            SimpleMap.DrawMeshes(camera);
+
             if (!IsExtinguisherGet)
             {
                 extinguisherNomal.DrawMeshes(camera);
             }
-            if (IsFireNear && fireStr >0)
+
+            if (IsFireNear && fireStrength >0)
             {
                 extinguisherUse.DrawMeshes(camera);
-                fireStr -= 3;
+                fireStrength -= 4;
             }
             else
             {
-               fireStr++;
+               fireStrength++;
             }
-            particleComponent.Draw(spriteBatch, basicEffect, camera.projection, camera.view, fireStr);
-            fire.Draw(spriteBatch, basicEffect, camera.projection, camera.View, fireStr);
+
+            particleComponent.Draw(spriteBatch, basicEffect, camera.projection, camera.view, fireStrength);
+            fire.Draw(spriteBatch, basicEffect, camera.projection, camera.View, fireStrength);
 
             drawHelper.Draw(spriteBatch);
-            Vector2 mouseLocation = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
-
-            if (IntersectDistance(phone.boundingS, mouseLocation, camera.view, camera.projection, new Viewport(0, 0, 1366, 768)) != null)
-            {
-                spriteBatch.Begin();
-                drawHelper.DrawDialer(spriteBatch);
-                spriteBatch.End();
-            }
 
             spriteBatch.Begin();
-            if (target.boundingS.Intersects(fireBrave.boundingS) && IsExtinguisherGet)
+
+            if (IntersectDistance(phone.boundingS, mouseState, camera.view, camera.projection, new Viewport(0, 0, 1366, 768)) != null)
             {
-                spriteBatch.Draw(fireBraveTex, Vector2.Zero, Color.White);
+                drawHelper.DrawDialer(spriteBatch);
             }
 
-            if (target.boundingS.Intersects(fireHP.boundingS) && IsExtinguisherGet)
+            if (!drawHelper.Isdialed)
             {
-                spriteBatch.Draw(fireHPTex, Vector2.Zero, Color.White);
+                spriteBatch.Draw(drawHelper.MustCall, Vector2.Zero, Color.White);
             }
-            if (!drawHelper.Isdialer)
+
+            if (target.boundingS.Intersects(fireBrave.boundingS) && IsExtinguisherGet)
             {
-                spriteBatch.Draw(MushCall, Vector2.Zero, Color.White);
+                spriteBatch.Draw(drawHelper.loseBrave, Vector2.Zero, Color.White);
             }
+            else if (target.boundingS.Intersects(fireHP.boundingS) && IsExtinguisherGet)
+            {
+                spriteBatch.Draw(drawHelper.loseHP, Vector2.Zero, Color.White);
+            }
+            else if (fireStrength > 2900)
+            {
+                spriteBatch.Draw(drawHelper.fireTooStr, Vector2.Zero, Color.White);
+            }
+
             spriteBatch.End();
             
             if (pauseScreen.IsPause)

@@ -11,9 +11,10 @@ namespace Exit_OF
 {
     class ChaseTarget
     {
+        KinectHelper kinect = new KinectHelper();
+
         private const float MinimumAltitude = 20f;
 
-        KinectHelper kinect = new KinectHelper();
         public Model Model;
 
         float Scale;
@@ -66,18 +67,15 @@ namespace Exit_OF
             Scale = scale;
 
             boundingS = new BoundingSphere(Model.Meshes[0].BoundingSphere.Center, Model.Meshes[0].BoundingSphere.Radius);
-            foreach (ModelMesh mesh in Model.Meshes)
-            {
-                boundingS = BoundingSphere.CreateMerged(boundingS, mesh.BoundingSphere);
-            }
             boundingS.Radius *= scale;
 
-            kinect.Init(content);
+            // kinect.Init(content);
         }
 
         public void Update(GameTime gameTime)
         {
             KeyboardState keyboardState = Keyboard.GetState();
+
             kinect.Update();
 
             float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;

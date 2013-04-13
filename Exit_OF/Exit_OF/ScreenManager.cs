@@ -23,11 +23,6 @@ namespace Exit_OF
             m_DicScreen.Add(mode, screen);
         }
 
-        public void RemoveScreen(Mode mode)
-        {
-            m_DicScreen[mode] = null;
-        }
-
         public void SelectScreen(Mode mode)
         {
             m_ActiveScreen = m_DicScreen[mode];

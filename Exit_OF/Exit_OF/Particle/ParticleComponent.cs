@@ -37,7 +37,7 @@ namespace Exit_OF
         {
             Emitter smokeEmitter = new Emitter();
             smokeEmitter.Active = true;
-            smokeEmitter.TextureList.Add(content.Load<Texture2D>("smoke"));
+            smokeEmitter.TextureList.Add(content.Load<Texture2D>(@"HomeEScreen\smoke"));
             smokeEmitter.RandomEmissionInterval = new RandomMinMax(45);
             smokeEmitter.ParticleLifeTime = 1350;
             smokeEmitter.ParticleDirection = new RandomMinMax(-15, 15);
