@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Exit_OF
 {
@@ -21,7 +22,7 @@ namespace Exit_OF
         ParticleComponent particleComponent;
 
         SpriteAnimation fire;
-        int fireStrength = 1000;
+        int fireStrength = 2000;
 
         ChaseTarget target;
         ChaseCamera camera;
@@ -46,13 +47,22 @@ namespace Exit_OF
 
         PauseScreen pauseScreen = new PauseScreen();
 
+        BoundingBox bbESC = new BoundingBox(new Vector3(92, 20, -129), new Vector3(100, 80, -106));
+
         List<BoundingBox> boundingBs = new List<BoundingBox>();
         BoundingBox bbKitchen = new BoundingBox(new Vector3(-96, 20, -164), new Vector3(30, 80, -51));
         BoundingBox bbConnection = new BoundingBox(new Vector3(-144, 20, -51), new Vector3(-87, 80, 15));
         BoundingBox bbLivingroom = new BoundingBox(new Vector3(-87, 20, -72), new Vector3(98, 80, 132));
         BoundingBox bbDoor = new BoundingBox(new Vector3(38, 20, -145), new Vector3(98, 80, -81));
         BoundingBox bbLivingroomDoor = new BoundingBox(new Vector3(57, 20, -82), new Vector3(80, 80, -72));
-        bool IsMovable = true;
+
+        SoundEffect TickTock;
+        bool TickTockNeed = false;
+        bool TickTockPlayed = false;
+        SoundEffect Cough;
+        bool CoughPlayed = false;
+        SoundEffect Eat;
+        bool EatPlayed = false;
 
         public HomeEScreen(Exit_OF game, GraphicsDevice device, ContentManager content)
         {
@@ -113,6 +123,10 @@ namespace Exit_OF
             fire = new SpriteAnimation();
             fire.Init(content, @"HomeEScreen\fire", Vector2.Zero, 4, 4, 14, 3, 0.3f);
 
+            TickTock = content.Load<SoundEffect>(@"HomeEScreen\TickTock");
+            Cough = content.Load<SoundEffect>(@"HomeEScreen\Cough");
+            Eat = content.Load<SoundEffect>(@"HomeEScreen\Eat");
+
             pauseScreen.Init(content);
         }
 
@@ -157,6 +171,10 @@ namespace Exit_OF
             {
                 IsExtinguisherGet = true;
                 drawHelper.IsExtinguisherGet = true;
+                if (!EatPlayed)
+                {
+                    Eat.Play();
+                }
             }
 
             if (target.boundingS.Intersects(fireIndicator.boundingS) && IsExtinguisherGet)
@@ -172,17 +190,44 @@ namespace Exit_OF
             if (target.boundingS.Intersects(fireBrave.boundingS))
             {
                 drawHelper.brave--;
+                drawHelper.braveDown = true;
+                if (!CoughPlayed)
+                {
+                    Cough.Play();
+                    CoughPlayed = true;
+                }
             }
+            else
+            {
+                drawHelper.braveDown = false;
+            }
+
             if (target.boundingS.Intersects(fireHP.boundingS))
             {
                 drawHelper.HP--;
+                drawHelper.HPDown = true;
+            }
+            else
+            {
+                drawHelper.HPDown = false;
             }
 
-            if (drawHelper.HP < 0 || drawHelper.brave < 0 || fireStrength > 3500)
+            if (drawHelper.HP < 0 || drawHelper.brave < 0 || fireStrength > 7000)
             {
                 m_ScreenManager.SelectScreen(Mode.ResultBadEScreen);
             }
             if (fireStrength <= 0)
+            {
+                m_ScreenManager.SelectScreen(Mode.ResultEScreen);
+            }
+
+            if (TickTockNeed && !TickTockPlayed)
+            {
+                TickTock.Play();
+                TickTockPlayed = true;
+            }
+
+            if (bbESC.Contains(target.boundingS) == ContainmentType.Contains)
             {
                 m_ScreenManager.SelectScreen(Mode.ResultEScreen);
             }
@@ -251,7 +296,7 @@ namespace Exit_OF
             target.DrawMeshes(camera);
             homeModelHelper.Draw(camera);
             phone.DrawMeshes(camera);
-            SimpleMap.DrawMeshes(camera);
+            // SimpleMap.DrawMeshes(camera);
 
             if (!IsExtinguisherGet)
             {
@@ -261,15 +306,15 @@ namespace Exit_OF
             if (IsFireNear && fireStrength > 0)
             {
                 extinguisherUse.DrawMeshes(camera);
-                fireStrength -= 4;
+                fireStrength -= 8;
             }
             else
             {
                 fireStrength++;
             }
 
-            particleComponent.Draw(spriteBatch, basicEffect, camera.projection, camera.view, fireStrength);
-            fire.Draw(spriteBatch, basicEffect, camera.projection, camera.View, fireStrength);
+            particleComponent.Draw(spriteBatch, basicEffect, camera.projection, camera.view, fireStrength / 2);
+            fire.Draw(spriteBatch, basicEffect, camera.projection, camera.View, fireStrength / 2);
 
             drawHelper.Draw(spriteBatch);
 
@@ -280,29 +325,27 @@ namespace Exit_OF
                 drawHelper.DrawDialer(spriteBatch);
             }
 
-            if (fireStrength > 2900)
+            if (fireStrength > 6040)
             {
                 spriteBatch.Draw(drawHelper.fireTooStr, Vector2.Zero, Color.White);
+                TickTockNeed = true;
             }
             else if (!drawHelper.Isdialed)
             {
                 spriteBatch.Draw(drawHelper.MustCall, Vector2.Zero, Color.White);
             }
-            else if (target.boundingS.Intersects(fireBrave.boundingS) && IsExtinguisherGet)
+            else if (target.boundingS.Intersects(fireBrave.boundingS))
             {
                 spriteBatch.Draw(drawHelper.loseBrave, Vector2.Zero, Color.White);
             }
-            else if (target.boundingS.Intersects(fireHP.boundingS) && IsExtinguisherGet)
+            else if (target.boundingS.Intersects(fireHP.boundingS))
             {
                 spriteBatch.Draw(drawHelper.loseHP, Vector2.Zero, Color.White);
             }
 
             spriteBatch.End();
 
-            if (pauseScreen.IsPause)
-            {
-                pauseScreen.Draw(spriteBatch);
-            }
+            pauseScreen.Draw(spriteBatch);
         }
     }
 }

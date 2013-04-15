@@ -16,7 +16,7 @@ namespace Exit_OF
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        ScreenManager m_ScreenManager = new ScreenManager();
+        ScreenManager m_ScreenManager;
 
         public Exit_OF()
         {
@@ -31,6 +31,8 @@ namespace Exit_OF
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            m_ScreenManager =  new ScreenManager(this,GraphicsDevice,Content);
+
             IScreen.m_ScreenManager = m_ScreenManager;
 
             base.Initialize();

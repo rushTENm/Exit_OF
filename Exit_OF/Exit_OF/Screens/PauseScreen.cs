@@ -27,20 +27,21 @@ namespace Exit_OF
             m_BackgroundImage = content.Load<Texture2D>(@"PauseScreen\pauseBackground");
 
             m_BackButton = new Button();
-            m_BackButton.Init(content, new Vector2(876,283), @"PauseScreen\backNomal", @"PauseScreen\backHover");
+            m_BackButton.Init(content, new Vector2(876, 283), @"PauseScreen\backNomal", @"PauseScreen\backHover");
             m_BackButton.UserEvent = OnHoverBackButton;
 
             m_ContinueButton = new Button();
-            m_ContinueButton.Init(content, new Vector2(312,283), @"PauseScreen\continueNomal", @"PauseScreen\continueHover");
+            m_ContinueButton.Init(content, new Vector2(312, 283), @"PauseScreen\continueNomal", @"PauseScreen\continueHover");
             m_ContinueButton.UserEvent = OnHoverContinueButton;
 
             m_RestartButton = new Button();
-            m_RestartButton.Init(content, new Vector2(594,283), @"PauseScreen\restartNomal", @"PauseScreen\restartHover");
+            m_RestartButton.Init(content, new Vector2(594, 283), @"PauseScreen\restartNomal", @"PauseScreen\restartHover");
             m_RestartButton.UserEvent = OnHoverRestartButton;
         }
 
         private void OnHoverBackButton()
         {
+            IsPause = false;
             m_ScreenManager.SelectScreen(Mode.StageEScreen);
         }
 
@@ -51,28 +52,36 @@ namespace Exit_OF
 
         private void OnHoverRestartButton()
         {
+            IsPause = false;
+            m_ScreenManager.ResetHEScreen();
         }
 
         public override void Update(GameTime gameTime)
         {
-            mouseState = Mouse.GetState();
+            if (IsPause)
+            {
+                mouseState = Mouse.GetState();
 
-            m_BackButton.Update(mouseState);
-            m_ContinueButton.Update(mouseState);
-            m_RestartButton.Update(mouseState);
+                m_BackButton.Update(mouseState);
+                m_ContinueButton.Update(mouseState);
+                m_RestartButton.Update(mouseState);
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Begin();
+            if (IsPause)
+            {
+                spriteBatch.Begin();
 
-            spriteBatch.Draw(m_BackgroundImage, Vector2.Zero, Color.White);
+                spriteBatch.Draw(m_BackgroundImage, Vector2.Zero, Color.White);
 
-            m_BackButton.Draw(spriteBatch);
-            m_ContinueButton.Draw(spriteBatch);
-            m_RestartButton.Draw(spriteBatch);
+                m_BackButton.Draw(spriteBatch);
+                m_ContinueButton.Draw(spriteBatch);
+                m_RestartButton.Draw(spriteBatch);
 
-            spriteBatch.End();
+                spriteBatch.End();
+            }
         }
     }
 }

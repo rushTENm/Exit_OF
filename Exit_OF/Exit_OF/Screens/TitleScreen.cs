@@ -7,12 +7,15 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 
 namespace Exit_OF
 {
     class TitleScreen : IScreen
     {
         Texture2D m_BackgroundImage;
+        Texture2D PreludeImage;
+        int PreludeCounter = 0;
 
         Button m_DrillButton;
         Button m_ExitButton;
@@ -20,9 +23,12 @@ namespace Exit_OF
 
         MouseState mouseState;
 
+        Song BGM;
+
         public override void Init(ContentManager content)
         {
             m_BackgroundImage = content.Load<Texture2D>(@"TitleScreen\titleBackground");
+            PreludeImage = content.Load<Texture2D>(@"TitleScreen\preludeBackground");
 
             m_DrillButton = new Button();
             m_DrillButton.Init(content, new Vector2(350, 335), @"TitleScreen\drillNomal", @"TitleScreen\drillHover");
@@ -35,6 +41,10 @@ namespace Exit_OF
             m_SettingButton = new Button();
             m_SettingButton.Init(content, new Vector2(20, 598), @"TitleScreen\settingsNomal", @"TitleScreen\settingsHover");
             m_SettingButton.UserEvent = OnHoverSettingButton;
+
+            BGM = content.Load<Song>("BGM");
+            MediaPlayer.IsRepeating = true;
+            MediaPlayer.Play(BGM);
         }
 
         private void OnHoverDrillButton()
@@ -63,12 +73,20 @@ namespace Exit_OF
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
+            
+            if (PreludeCounter < 60)
+            {
+                spriteBatch.Draw(PreludeImage, Vector2.Zero, Color.White);
+                PreludeCounter++;
+            }
+            else
+            {
+                spriteBatch.Draw(m_BackgroundImage, Vector2.Zero, Color.White);
 
-            spriteBatch.Draw(m_BackgroundImage, Vector2.Zero, Color.White);
-
-            m_DrillButton.Draw(spriteBatch);
-            m_ExitButton.Draw(spriteBatch);
-            m_SettingButton.Draw(spriteBatch);
+                m_DrillButton.Draw(spriteBatch);
+                m_ExitButton.Draw(spriteBatch);
+                m_SettingButton.Draw(spriteBatch);
+            }
 
             spriteBatch.End();
         }

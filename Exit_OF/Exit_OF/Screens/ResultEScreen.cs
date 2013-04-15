@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Exit_OF
 {
@@ -20,6 +21,9 @@ namespace Exit_OF
         Button m_StageButton;
         Button m_TitleButton;
         Button m_RestartButton;
+
+        SoundEffect ClearSFX;
+        bool ClearSFXPlayed = false;
 
         public override void Init(ContentManager content)
         {
@@ -37,6 +41,8 @@ namespace Exit_OF
             m_RestartButton = new Button();
             m_RestartButton.Init(content, new Vector2(500,400), @"ResultEScreen\restartNomal", @"ResultEScreen\restartHover");
             m_RestartButton.UserEvent = OnHoverRestartButton;
+
+            ClearSFX = content.Load<SoundEffect>(@"ResultEScreen\ClearSFX");
         }
 
         private void OnHoverStageButton()
@@ -56,6 +62,11 @@ namespace Exit_OF
 
         public override void Update(GameTime gameTime)
         {
+            if (!ClearSFXPlayed)
+            {
+                ClearSFX.Play();
+                ClearSFXPlayed = true;
+            }
             mouseState = Mouse.GetState();
 
             m_StageButton.Update(mouseState);

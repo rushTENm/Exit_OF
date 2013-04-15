@@ -64,7 +64,6 @@ Content\HomeEScreen\home\homeTV.xnb
 Content\HomeEScreen\home\homeWallFront.xnb
 Content\HomeEScreen\home\homeRoomSmallChest.xnb
 Content\HomeEScreen\home\homeFloor.xnb
-Content\HomeEScreen\home\homeCeiling.xnb
 Content\HomeEScreen\phone.xnb
 Content\HomeEScreen\home\homeRoomSmallBed.xnb
 Content\HomeEScreen\home\homeTable.xnb
@@ -83,3 +82,14 @@ Content\CallTex.xnb
 Content\HomeEScreen\fire.xnb
 Content\HomeEScreen\smoke.xnb
 Content\fireTooStr.xnb
+Content\HomeEScreen\home\homeCeiling.xnb
+Content\TitleScreen\preludeBackground.xnb
+Content\BGM.xnb
+Content\HomeEScreen\TickTock.xnb
+Content\HomeEScreen\phoneSFX.xnb
+Content\HomeEScreen\Cough.xnb
+Content\HomeEScreen\Eat.xnb
+Content\ResultEScreen\failSFX.xnb
+Content\ResultEScreen\ClearSFX.xnb
+Content\HomeEScreen\GoSFX.xnb
+Content\BGM.wma
