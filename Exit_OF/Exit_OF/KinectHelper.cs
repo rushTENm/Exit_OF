@@ -114,29 +114,25 @@ namespace Exit_OF
             spriteBatch.End();
         }
 
-        void drawLine(SpriteBatch spriteBatch, Vector2 v1, Vector2 v2, Color col)
+        void drawLine(SpriteBatch spriteBatch, Vector2 v1, Vector2 v2, Color color)
         {
-            Vector2 origin = new Vector2(0.5f, 0.0f);
             Vector2 diff = v2 - v1;
-            float angle;
             Vector2 scale = new Vector2(1.0f, diff.Length() / lineDot.Height);
-            angle = (float)(Math.Atan2(diff.Y, diff.X)) - MathHelper.PiOver2;
-            spriteBatch.Draw(lineDot, v1, null, col, angle, origin, scale, SpriteEffects.None, 1.0f);
+            float angle = (float)(Math.Atan2(diff.Y, diff.X)) - MathHelper.PiOver2;
+            Vector2 origin = new Vector2(0.5f, 0.0f);
+
+            spriteBatch.Draw(lineDot, v1, null, color, angle, origin, scale, SpriteEffects.None, 1.0f);
         }
 
-        void drawBone(SpriteBatch spriteBatch, Joint j1, Joint j2, Color col)
+        void drawBone(SpriteBatch spriteBatch, Joint j1, Joint j2, Color color)
         {
-            ColorImagePoint j1P = kinect.MapSkeletonPointToColor(
-                j1.Position,
-                ColorImageFormat.RgbResolution640x480Fps30);
-            Vector2 j1V = new Vector2(j1P.X, j1P.Y);
+            ColorImagePoint mapped = kinect.CoordinateMapper.MapSkeletonPointToColorPoint(j1.Position, ColorImageFormat.RgbResolution640x480Fps30);
+            Vector2 mapToV = new Vector2(mapped.X, mapped.Y) * new Vector2(2.134375f);
 
-            ColorImagePoint j2P = kinect.MapSkeletonPointToColor(
-                j2.Position,
-                ColorImageFormat.RgbResolution640x480Fps30);
-            Vector2 j2V = new Vector2(j2P.X, j2P.Y);
+            ColorImagePoint mapped2 = kinect.CoordinateMapper.MapSkeletonPointToColorPoint(j2.Position, ColorImageFormat.RgbResolution640x480Fps30);
+            Vector2 mapToV2 = new Vector2(mapped2.X, mapped2.Y) * new Vector2(2.134375f);
 
-            drawLine(spriteBatch, j1V, j2V, col);
+            drawLine(spriteBatch, mapToV, mapToV2, color);
         }
 
         void drawSkeleton(SpriteBatch spriteBatch, Skeleton skel, Color col)
